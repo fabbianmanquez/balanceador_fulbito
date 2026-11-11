@@ -184,12 +184,13 @@
   }
   .pop[hidden]{display:none}
   .taWrap .pop{border-color:#fff;box-shadow:0 0 0 2px #05101f,0 4px 12px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.3)}
-  .taWrap .pop.ok{background:linear-gradient(180deg,#1f6f1a,#0f4310)}
-  .pop.inline{position:static;display:block;margin-top:6px;max-width:none;animation:none}
+  .pop.inline{position:relative;display:block;margin-top:6px;max-width:none;animation:none}
   .pop b{color:#ffe870}
-  .pop.ok{background:linear-gradient(180deg,#58c13b,#2b7d1d)}
-  .pop.warn{background:linear-gradient(180deg,#e9a43a,#a8610b)}
-  .pop.bad{background:linear-gradient(180deg,#d4574d,#8a251e)}
+  .pop{--st:#5ddf3a;padding-left:20px;background:linear-gradient(180deg,var(--nav1),var(--nav2))}
+  .pop::before{content:'';position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--st)}
+  .pop.ok{--st:#5ddf3a}
+  .pop.warn{--st:#f2a93b}
+  .pop.bad{--st:#ef5b50}
   @keyframes popIn{from{opacity:0;transform:translateY(8px) scale(.94)}to{opacity:1;transform:none}}
 
   .arrows{display:flex;gap:4px;margin-top:6px}
@@ -400,7 +401,7 @@
     .sbox p.sm{font-size:17px}
     input[type=text],textarea{font-size:17px;padding:11px 13px}
     textarea.lined{--rh:34px;min-height:max(408px,calc(100vh - 460px));font-size:18px;padding:6px 18px}
-    .pop{font-size:15px;padding:9px 16px}
+    .pop{font-size:15px;padding:9px 16px 9px 24px}
     .mbtn{font-size:18px;padding:15px 40px}
     .alert{font-size:15px;padding:10px 14px}
     .cmdbar{padding:14px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}

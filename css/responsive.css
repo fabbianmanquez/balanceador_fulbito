@@ -4,16 +4,24 @@
 @media (max-width:520px){
   body{padding:6px}
   .tv{border-width:2px}
-  .ttl{font-size:13px;letter-spacing:.3px;padding:6px 2px}
-  .tag{padding:5px 10px}
-  .count{padding:5px 8px 5px 10px;margin-right:2px}
-  .tag b,.count b{font-size:10px}
-  .snd{width:26px;height:24px;margin:auto 3px}
-  .navbtn{height:26px;padding:0 6px 0 4px;margin:0 2px 0 6px}
-  .homebtn{margin:0 6px 0 0}
-  .homebtn img{height:26px}
-  .homebtn{gap:4px}
-  .homebtn .lbl{font-size:8px}
+  .ttl{font-size:14px;letter-spacing:.3px;padding:7px 4px;line-height:1.15}
+  /* barra en dos filas: arriba atrás, título, sonido y menú; abajo la leyenda y el contador */
+  .topbar{display:grid;grid-template-columns:auto 1fr auto auto;
+    grid-template-areas:"back title snd home" "tag tag count count";align-items:center}
+  #backBtn{grid-area:back}
+  .ttl{grid-area:title}
+  .snd{grid-area:snd}
+  .homebtn{grid-area:home}
+  .tag{grid-area:tag;justify-self:start;padding:4px 14px 4px 12px;margin-bottom:0}
+  .count{grid-area:count;justify-self:end;padding:4px 12px 4px 14px;margin-right:-6px}
+  .tag b,.count b{font-size:11px}
+  .topbar.no-info .count,.topbar.no-count .count{display:none}
+  .topbar:not(.no-info) .tag,.topbar:not(.no-info) .count{border-top:1px solid #05101f}
+  .snd{width:30px;height:28px;margin:0 6px}
+  .navbtn{height:30px;padding:0 9px 0 6px;margin:6px 4px 6px 8px}
+  .homebtn{margin:4px 8px 4px 2px;gap:5px}
+  .homebtn img{height:28px}
+  .homebtn .lbl{font-size:9px}
   .stage{padding:9px;gap:8px}
   .stage.single .carousel{height:clamp(340px,calc(100vh - 200px),520px)}
   .brand img{height:42px}

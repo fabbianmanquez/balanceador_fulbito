@@ -37,6 +37,9 @@ export function head(tag,title,count){
   $('tag').parentElement.hidden = !tag;
   $('title').textContent = title;
   $('count').innerHTML = count || '&nbsp;';
+  const bar = document.querySelector('.topbar');
+  bar.classList.toggle('no-info', !tag && !count);
+  bar.classList.toggle('no-count', !count);   // en celular, la fila de abajo solo aparece si hay algo que mostrar
 }
 // "Volver atrás" y "Menú principal" viven en la barra superior; los comandos que avanzan
 // (marcados con next) van al final de la barra de abajo, en la esquina derecha.

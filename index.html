@@ -823,6 +823,7 @@ function buildCandidates(){
   const seen = new Set();
   cands = cands.filter(c=>{ const k=c.t[0].join(','); if(seen.has(k)) return false; seen.add(k); return true; });
   cands.sort((x,y)=>x.cost-y.cost);
+  cands.forEach(c=>{ if(Math.random() < 0.5) c.t = [c.t[1], c.t[0]]; });   // el equipo con un jugador de mas (y el arquero) no queda siempre en el mismo lado
   S.cands = cands.slice(0,40); S.candIdx = 0;
   applyLabels();
 }

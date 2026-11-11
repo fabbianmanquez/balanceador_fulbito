@@ -8,7 +8,7 @@ import { $ } from '../utils.js';
 const artPl = (cls,name,gk) => '<div class="pl"><i class="dot '+cls+'"></i><span class="plate'+(gk?' gk':'')+'">'+name+'</span></div>';
 function artPitch(){
   const line = a => '<div class="ap-line">'+a.join('')+'</div>';
-  return '<div class="apitch"><div class="ap-hd">TU PLANTEL</div><div class="ap-field">'+
+  return '<div class="apitch"><div class="ap-hd">ARMAR PARTIDO</div><div class="ap-field">'+
     line([artPl('d-del','GALLO'), artPl('d-del','MATI')])+
     line([artPl('d-med','FABI'), artPl('d-med','TIMO'), artPl('d-med','LUCHO')])+
     line([artPl('d-def','NACHO'), artPl('d-def','PEPE')])+

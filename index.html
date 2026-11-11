@@ -128,6 +128,8 @@
   .row:focus-visible{outline:3px solid #ffe870;outline-offset:1px}
   .row.dup{background:linear-gradient(180deg,#fde7e4,#f2b9b2);border:2px solid #c0271d}
   .badge.rep{background:linear-gradient(180deg,var(--red1),var(--red2));border:1px solid #4d0f0b}
+  .row input.nm-edit{flex:1;min-width:0;width:auto;font:inherit;padding:3px 7px;
+    border:1px solid #c0271d;border-radius:2px;background:#fff;color:#12233d;box-shadow:none;cursor:text}
   .row .sug{font-family:inherit;font-size:12px;font-weight:700;font-style:italic;cursor:pointer;
     background:linear-gradient(180deg,var(--gold1),var(--gold2));color:#2a2100;border:1px solid var(--goldbd);
     border-radius:2px;padding:3px 8px;flex:0 0 auto;white-space:nowrap}
@@ -956,7 +958,7 @@ function renderRevisar(st){
     if(warned.has(k)) return;
     warned.add(k);
     warn += '<div class="alert">Nombre repetido: <b>'+esc(S.draft[i].trim())+'</b>. No se puede armar con dos iguales. '+
-      'Cambiá uno, por ejemplo por <b>'+esc(sug[i])+'</b></div>';
+      'Tocá el nombre para editarlo (te traigo <b>'+esc(sug[i])+'</b>) y confirmá con Enter</div>';
   });
   if(!c){
     const near = CANCHAS.reduce((a,b)=> Math.abs(b.n-n) < Math.abs(a.n-n) ? b : a);
@@ -968,7 +970,9 @@ function renderRevisar(st){
       S.draft.map((nm,i)=>{
         const isDup = dup.has(nameKey(nm));
         return '<div class="row'+(isDup?' dup':'')+'" style="cursor:default">'+
-        '<span class="nm">'+esc(nm)+'</span>'+
+        (isDup ? '<input type="text" class="nm-edit" data-edit="'+i+'" value="'+esc(nm)+'" maxlength="24" '+
+                   'autocomplete="off" aria-label="Editar nombre repetido">'
+               : '<span class="nm">'+esc(nm)+'</span>')+
         (isDup ? '<span class="badge rep">REPETIDO</span>' : '')+
         (later.has(i) ? '<button class="sug" data-sug="'+i+'">Usar '+esc(sug[i])+'</button>' : '')+
         '<button class="del" data-del="'+i+'" aria-label="Quitar">×</button></div>';
@@ -979,6 +983,26 @@ function renderRevisar(st){
       '<div class="sbox" style="margin-top:6px"><h4>MODALIDAD</h4><p class="sm">'+(c?c.label:'—')+'</p></div>'+
       '<div class="sbox"><h4>POR EQUIPO</h4><p>'+(c?c.n/2:'—')+'</p></div>'+
     '</div>'+ warn;
+  st.querySelectorAll('[data-edit]').forEach(inp=>{
+    const i = +inp.dataset.edit, orig = S.draft[i];
+    let dirty = false;
+    inp.addEventListener('focus', ()=>{
+      if(sug[i]) inp.value = sug[i];
+      inp.select();
+    });
+    inp.addEventListener('input', ()=>{ dirty = true; });
+    inp.addEventListener('keydown', e=>{
+      if(e.key==='Enter'){
+        const v = inp.value.trim();
+        if(v){ S.draft[i] = v; render(); }
+      } else if(e.key==='Escape'){ inp.blur(); }
+    });
+    inp.addEventListener('blur', ()=>{
+      const v = inp.value.trim();
+      if(dirty && v && v !== orig){ S.draft[i] = v; render(); }
+      else inp.value = orig;
+    });
+  });
   st.querySelectorAll('[data-sug]').forEach(b=> b.addEventListener('click',()=>{ S.draft[+b.dataset.sug] = sug[+b.dataset.sug]; render(); }));
   st.querySelectorAll('[data-del]').forEach(b=> b.addEventListener('click',()=>{ S.draft.splice(+b.dataset.del,1); render(); }));
   $('addIn').addEventListener('keydown', e=>{

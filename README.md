@@ -9,6 +9,7 @@ Armá equipos de fútbol parejos a partir de la lista del grupo de WhatsApp: peg
 ## Funciones
 
 - **Importar lista.** Lee la lista como venga: vertical, horizontal, con numeración, con comas o con guiones. Descarta solo los datos de la cancha, la hora y la fecha (y los guarda para el mensaje de WhatsApp) y detecta nombres repetidos.
+- **Numeración automática.** Al escribir a mano, cada jugador nuevo trae su número. Al pegar una lista, corrige los números salteados, repetidos o desordenados (1, 3, 4 pasa a 1, 2, 3).
 - **Validación en vivo.** Mientras escribís indica cuántos jugadores hay y a qué modalidad corresponde (F5, F6, F7, F8, F9 o F11).
 - **Un jugador de más.** Con 11 jugadores para un F5 pregunta si van a jugar 11 y reparte 6 contra 5 cuidando el promedio de cada equipo.
 - **Formato liga.** Elegís cuántos equipos (de 3 a 8) y cuántos jugadores por equipo (de 4 a 11) y arma todos los equipos parejos.

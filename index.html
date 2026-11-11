@@ -234,11 +234,9 @@
   /* dibujo de cancha (tarjeta Importar lista): todo en cqw/cqh para ajustarse a la caja */
   .apitch{position:absolute;inset:0;display:flex;flex-direction:column;
     background:linear-gradient(180deg,#1b2129,#0c1015);font-size:clamp(9px,3.7cqw,20px)}
-  .ap-hd{margin:4cqh 4cqw 0;padding:.55em .9em;display:flex;align-items:center;gap:.8em;
+  .ap-hd{margin:4cqh 4cqw 0;padding:.55em .9em;display:flex;align-items:center;justify-content:center;
     background:linear-gradient(180deg,#2b3138,#0b0f14);border:2px solid #05101f;
     box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);color:#fff;font-weight:700;letter-spacing:.22em;font-size:.95em}
-  .ap-hd i{width:1.5em;height:1.5em;border-radius:50%;border:2px solid #fff;flex:0 0 auto;
-    background:radial-gradient(circle at 35% 30%,#fff,#c3cbd4)}
   .ap-field{position:relative;isolation:isolate;flex:1;min-height:0;margin-top:3cqh;
     display:flex;flex-direction:column;justify-content:space-around;padding:3cqh 1cqw 5cqh}
   .ap-field::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:polygon(7% 0,93% 0,100% 100%,0 100%);
@@ -1047,7 +1045,7 @@ document.addEventListener('click', e=>{
 const artPl = (cls,name,gk) => '<div class="pl"><i class="dot '+cls+'"></i><span class="plate'+(gk?' gk':'')+'">'+name+'</span></div>';
 function artPitch(){
   const line = a => '<div class="ap-line">'+a.join('')+'</div>';
-  return '<div class="apitch"><div class="ap-hd"><i></i>TU PLANTEL</div><div class="ap-field">'+
+  return '<div class="apitch"><div class="ap-hd">TU PLANTEL</div><div class="ap-field">'+
     line([artPl('d-del','GALLO'), artPl('d-del','MATI')])+
     line([artPl('d-med','FABI'), artPl('d-med','TIMO'), artPl('d-med','LUCHO')])+
     line([artPl('d-def','NACHO'), artPl('d-def','PEPE')])+

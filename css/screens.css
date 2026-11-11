@@ -122,10 +122,11 @@
     radial-gradient(circle at 50% -6%,transparent 0 52px,rgba(255,255,255,.16) 52px 54px,transparent 54px),
     linear-gradient(180deg,#434c56,#2a3139)
 }
+.pitch.oscuro::after{border-color:rgba(255,255,255,.5);background:linear-gradient(rgba(255,255,255,.3),rgba(255,255,255,.3)) center bottom/42% 42% no-repeat}
 .pitch.oscuro::before{
   background:
-    radial-gradient(circle at 50% -6%,transparent 0 52px,rgba(255,255,255,.18) 52px 54px,transparent 54px),
-    linear-gradient(180deg,#505b66,#353e49)
+    radial-gradient(circle at 50% -6%,transparent 0 52px,rgba(255,255,255,.4) 52px 54px,transparent 54px),
+    linear-gradient(180deg,#9aa6b2,#76828e)
 }
 .pitch::after{
   content:'';position:absolute;z-index:-1;left:20%;right:20%;bottom:0;height:30%;

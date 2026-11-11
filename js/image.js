@@ -73,7 +73,7 @@ export async function renderTeamsImage(){
     g.fillStyle = lin(0,py,0,py+pitchH,[[0,'#171c22'],[1,'#0d1116']]); g.fillRect(x,py,colW,pitchH);
     g.save(); g.beginPath(); g.rect(x,py,colW,pitchH); g.clip();
     g.beginPath(); g.moveTo(x+colW*.07,py); g.lineTo(x+colW*.93,py); g.lineTo(x+colW,py+pitchH); g.lineTo(x,py+pitchH); g.closePath();
-    g.fillStyle = side==='oscuro' ? lin(0,py,0,py+pitchH,[[0,'#505b66'],[1,'#353e49']]) : lin(0,py,0,py+pitchH,[[0,'#434c56'],[1,'#2a3139']]); g.fill();
+    g.fillStyle = side==='oscuro' ? lin(0,py,0,py+pitchH,[[0,'#9aa6b2'],[1,'#76828e']]) : lin(0,py,0,py+pitchH,[[0,'#434c56'],[1,'#2a3139']]); g.fill();
     g.save(); g.clip();
     g.strokeStyle = 'rgba(255,255,255,.16)'; g.lineWidth = 3;
     g.beginPath(); g.arc(x+colW/2, py-pitchH*.04, colW*.11, 0, Math.PI*2); g.stroke();

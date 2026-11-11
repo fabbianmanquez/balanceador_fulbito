@@ -319,8 +319,6 @@
 
   /* varios equipos (formato liga) */
   .stage.multi{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-  .phead.kit{background:linear-gradient(180deg,var(--tc),var(--tc2));color:var(--ink-c,#fff)}
-  .thead .sw{background:var(--tc)}
   .stage.multi .plate{font-size:11px;padding:3px 6px}
   .stage.multi .pl{max-width:96px}
 
@@ -400,6 +398,7 @@
     box-shadow:0 1px 3px rgba(0,0,0,.6)}
   .thead.claro .sw{background:radial-gradient(circle at 35% 30%,#fff,#c3cbd4)}
   .thead.oscuro .sw{background:radial-gradient(circle at 35% 30%,#56616d,#090c10)}
+  .thead.num .sw{display:none}
 
   .pitch{
     position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:space-around;
@@ -580,7 +579,7 @@ const CANCHAS = [
 const ARROW_COL = {1:'var(--a1)',2:'var(--a2)',3:'var(--a3)',4:'var(--a4)',5:'var(--a5)',7:'#a875f0'};
 const ARROW_ROT = {1:180,2:135,3:90,4:45,5:0};
 const ARROW_TXT = {1:'Hace lo que puede',2:'Irregular',3:'Regular',4:'Picante',5:'Sobrado',6:'Lesionado',7:'Random'};
-const LEVELS = [1,2,3,4,5,6,7];   // 6 = Lesionado (cuenta como Irregular), 7 = Random (Irregular o Regular al azar)
+const LEVELS = [1,2,3,4,5,6,7];   // 6 = Lesionado (al azar entre Regular, Irregular y Hace lo que puede), 7 = Random (al azar entre Picante y Hace lo que puede)
 
 const BACK = {importar:'inicio', formato:'inicio', revisar:'importar', equipos:'carga'};
 
@@ -592,7 +591,7 @@ const S = {
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const scoreOf = p => p.isGK ? 3 : p.arrow===6 ? 2 : p.arrow===7 ? (p.rv||2) : p.arrow;
+const scoreOf = p => p.isGK ? 3 : p.arrow >= 6 ? (p.rv || 2) : p.arrow;
 const gkTotal = () => S.players.filter(p=>p.isGK).length;
 
 const LESIONADO_PNG = 'data:image/png;base64,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';   // assets/lesionado.png (sin fondo)
@@ -790,7 +789,10 @@ function* combinations(pool,k){
 function nCk(n,k){ let r=1; for(let i=1;i<=k;i++) r = r*(n-k+i)/i; return r; }
 
 function buildCandidates(){
-  S.players.forEach(p=>{ if(p.arrow===7) p.rv = Math.random()<0.5 ? 2 : 3; });   // Random: Irregular o Regular
+  S.players.forEach(p=>{                                           // se sortea el puntaje de Lesionado y Random
+    if(p.arrow===6) p.rv = 1 + Math.floor(Math.random()*3);        // 1 a 3: Hace lo que puede, Irregular o Regular
+    else if(p.arrow===7) p.rv = 1 + Math.floor(Math.random()*4);   // 1 a 4: de Hace lo que puede a Picante
+  });
   if(S.mode==='liga'){ buildLiga(); applyLabels(); return; }
   const P = S.players, n = P.length;
   const gkIdx = [], free = [];
@@ -1389,31 +1391,20 @@ function renderCarga(st){
 function commitName(){ const i=$('nameIn'); if(i) S.players[S.sel].name = i.value; }
 function focusName(){ const i=$('nameIn'); if(i){ i.focus(); i.setSelectionRange(i.value.length,i.value.length); } }
 
-const KITS = [
-  {n:'ROJO',     e:'🔴', c1:'#e04a3f', c2:'#8a1f19'},
-  {n:'AZUL',     e:'🔵', c1:'#4f8fe6', c2:'#1d3f7d'},
-  {n:'VERDE',    e:'🟢', c1:'#4caf2f', c2:'#1f6a17'},
-  {n:'AMARILLO', e:'🟡', c1:'#ffe870', c2:'#c99a08', ink:'#2a2100'},
-  {n:'NARANJA',  e:'🟠', c1:'#f5a04a', c2:'#b05d0c'},
-  {n:'VIOLETA',  e:'🟣', c1:'#a875f0', c2:'#5a2fa5'},
-  {n:'BLANCO',   e:'⚪', c1:'#ffffff', c2:'#c3cbd4', ink:'#101820'},
-  {n:'NEGRO',    e:'⚫', c1:'#4a525c', c2:'#0b0f14'}
-];
 function teamDefs(count){
   if(S.mode!=='liga')
-    return [{title:'EQUIPO CLARO', side:'claro', style:'', emoji:'⚪'}, {title:'EQUIPO OSCURO', side:'oscuro', style:'', emoji:'⚫'}];
-  return KITS.slice(0,count).map(k=>({title:'EQUIPO '+k.n, side:'kit', emoji:k.e,
-    style:'--tc:'+k.c1+';--tc2:'+k.c2+';--ink-c:'+(k.ink||'#fff')}));
+    return [{title:'EQUIPO CLARO', side:'claro', emoji:'⚪'}, {title:'EQUIPO OSCURO', side:'oscuro', emoji:'⚫'}];
+  return Array.from({length:count},(_,i)=>({title:'EQUIPO '+(i+1), side:'num', emoji:''}));
 }
 
-function teamPanel(title,team,side,style){
-  return '<div class="panel"><div class="phead '+side+'" style="'+style+'">'+esc(title)+'</div><div class="list">'+
+function teamPanel(title,team,side){
+  return '<div class="panel"><div class="phead '+side+'">'+esc(title)+'</div><div class="list">'+
     team.slice().sort((a,b)=>scoreOf(b)-scoreOf(a)).map(p=>
       '<div class="row'+(p.isGK?' gk':'')+'" style="cursor:default"><span class="badge'+(p.isGK?' por':'')+'">'+p.label+'</span>'+
       '<span class="nm">'+esc(p.name.trim()||'—')+'</span>'+(p.isGK?'':levelSvg(p.arrow,15))+'</div>').join('')+
   '</div></div>';
 }
-function pitchPanel(title,team,side,style){
+function pitchPanel(title,team,side){
   const lines = {POR:[],DEF:[],MED:[],DEL:[]};
   team.forEach(p=> (lines[p.label]||lines.MED).push(p));
   const DOT = {DEL:'d-del', MED:'d-med', DEF:'d-def', POR:'d-por'};
@@ -1422,7 +1413,7 @@ function pitchPanel(title,team,side,style){
         '<div class="pl"><i class="dot '+DOT[p.label]+'"></i>'+
         '<span class="plate'+(p.isGK?' gk':'')+'">'+esc(p.name.trim()||'—')+'</span></div>').join('')+'</div>'
     : '';
-  return '<div class="panel"><div class="thead '+side+'" style="'+style+'"><span class="sw"></span>'+esc(title)+'</div>'+
+  return '<div class="panel"><div class="thead '+side+'"><span class="sw"></span>'+esc(title)+'</div>'+
     '<div class="pitch '+side+'">'+line(lines.DEL)+line(lines.MED)+line(lines.DEF)+line(lines.POR)+'</div></div>';
 }
 
@@ -1433,7 +1424,7 @@ function shareText(){
     .sort((a,b)=> (ORD[a.label]-ORD[b.label]) || a.name.localeCompare(b.name))
     .map(p => p.label + '  ' + (p.name.trim() || '—')).join('\n');
   return '⚽ ' + (S.venue || S.cancha.label) + '\n\n' +
-    teams.map((t,i)=> defs[i].emoji + ' ' + defs[i].title + '\n' + fmt(t)).join('\n\n');
+    teams.map((t,i)=> (defs[i].emoji ? defs[i].emoji + ' ' : '') + defs[i].title + '\n' + fmt(t)).join('\n\n');
 }
 
 function renderEquipos(st){
@@ -1448,7 +1439,7 @@ function renderEquipos(st){
         (S.copied ? '<div class="sbox" style="margin-top:6px"><h4>ESTADO</h4><p class="sm">'+esc(S.copied)+'</p></div>' : '')+
       '</div>'
     : '';
-  st.innerHTML = teams.map((t,i)=> draw(defs[i].title, t, defs[i].side, defs[i].style)).join('') +
+  st.innerHTML = teams.map((t,i)=> draw(defs[i].title, t, defs[i].side)).join('') +
     '<div style="grid-column:1/-1"><div class="sbox"><h4>EQUILIBRIO</h4><p class="sm">'+
       (S.mode==='liga' ? balanceLiga(c.spread) : balanceWord(c.cost))+'</p></div></div>'+
     share;
@@ -1518,7 +1509,7 @@ const ACTIONS = {
   toggleView(){ S.view = S.view==='lista'?'cancha':'lista'; render(); },
   reroll(){
     if(S.cands.length<2) return;
-    if(S.players.some(p=>!p.isGK && p.arrow===7)){      // con Random se vuelve a sortear el valor
+    if(S.players.some(p=>!p.isGK && p.arrow>=6)){       // con Lesionado o Random se vuelve a sortear el valor
       buildCandidates();
       S.candIdx = Math.floor(Math.random()*Math.min(6, S.cands.length));
     } else {

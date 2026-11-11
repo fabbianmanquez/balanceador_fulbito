@@ -1,19 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100" height="120" viewBox="0 0 100 120">
-  <defs>
-    <clipPath id="escudo">
-      <path d="M5 15 L30 5 Q50 15 70 5 L95 15 L95 62 Q95 98 50 115 Q5 98 5 62 Z"/>
-    </clipPath>
-  </defs>
-  <path d="M5 15 L30 5 Q50 15 70 5 L95 15 L95 62 Q95 98 50 115 Q5 98 5 62 Z" fill="#ffffff"/>
-  <g clip-path="url(#escudo)">
-    <rect x="37" y="0" width="26" height="120" fill="#0b3fbf"/>
-  </g>
-  <g fill="none" stroke="#0b3fbf" stroke-width="7" stroke-linecap="butt" stroke-linejoin="miter">
-    <path d="M15 72 V36 H24 Q31 36 31 45 Q31 54 24 54 H15"/>
-    <path d="M66 72 L78 36 L90 72 M70.5 61 H85.5"/>
-  </g>
-  <circle cx="50" cy="58" r="11" fill="#ffffff" stroke="#05154d" stroke-width="2"/>
-  <path d="M50 51.5 L56 56 L53.8 63 H46.2 L44 56 Z" fill="#05154d"/>
-  <path d="M50 51.5 V47.2 M56 56 L60.2 54.6 M53.8 63 L56.6 67 M46.2 63 L43.4 67 M44 56 L39.8 54.6" stroke="#05154d" stroke-width="1.6" stroke-linecap="round"/>
-  <path d="M5 15 L30 5 Q50 15 70 5 L95 15 L95 62 Q95 98 50 115 Q5 98 5 62 Z" fill="none" stroke="#0b3fbf" stroke-width="5" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="112" height="124" viewBox="-6 -2 112 124">
+<defs><linearGradient id="bn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f78c4"/><stop offset="1" stop-color="#1d3f7d"/></linearGradient>
+<linearGradient id="bd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d3f7d"/><stop offset="1" stop-color="#0b1e3f"/></linearGradient>
+<linearGradient id="bs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c2cad4"/></linearGradient>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe870"/><stop offset="1" stop-color="#dfae15"/></linearGradient><clipPath id="bc"><path d="M10 8 H90 V60 Q90 98 50 114 Q10 98 10 60 Z"/></clipPath></defs>
+<path d="M10 8 H90 V60 Q90 98 50 114 Q10 98 10 60 Z" fill="url(#bd)"/>
+<g clip-path="url(#bc)"><rect x="0" y="0" width="100" height="22" fill="url(#bg)"/><rect x="0" y="22" width="100" height="2" fill="#05101f"/></g>
+<path d="M33 98 V36 H54 Q72 36 72 53 Q72 70 54 70 H33" fill="none" stroke="url(#bs)" stroke-width="12" stroke-linejoin="round"/>
+<circle cx="66" cy="89" r="10" fill="url(#bg)" stroke="#05101f" stroke-width="1.82"/>
+<path d="M66 83.09 L71.45 87.18 L69.45 93.55 H62.55 L60.55 87.18 Z" fill="#05101f"/>
+<path d="M66 83.09 V79.18 M71.45 87.18 L75.27 85.91 M69.45 93.55 L72.00 97.18 M62.55 93.55 L60.00 97.18 M60.55 87.18 L56.73 85.91" stroke="#05101f" stroke-width="1.45" stroke-linecap="round"/>
+<path d="M10 8 H90 V60 Q90 98 50 114 Q10 98 10 60 Z" fill="none" stroke="#05101f" stroke-width="8.5" stroke-linejoin="round"/><path d="M10 8 H90 V60 Q90 98 50 114 Q10 98 10 60 Z" fill="none" stroke="url(#bs)" stroke-width="4.5" stroke-linejoin="round"/>
 </svg>

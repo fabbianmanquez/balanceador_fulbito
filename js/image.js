@@ -38,7 +38,7 @@ export async function renderTeamsImage(){
   g.fillStyle = '#fff'; g.font = '700 50px '+FONT; spaced('',3);
   g.shadowColor = 'rgba(0,0,0,.6)'; g.shadowBlur = 6; g.shadowOffsetY = 2;
   const title = (S.venue || S.cancha.label).toUpperCase();
-  const logoH = 126, logoW = Math.round(logoH*0.83);          // el logo ocupa el costado izquierdo
+  const logoH = 126, logoW = Math.round(logoH*0.9);          // el logo ocupa el costado izquierdo
   let tfs = 50; while(tfs > 24 && g.measureText(title).width > W - (pad + logoW + 20)*2){ tfs -= 2; g.font = '700 '+tfs+'px '+FONT; }
   g.fillText(title, W/2, 68);
   if(logo) g.drawImage(logo, pad, 12, logoW, logoH);

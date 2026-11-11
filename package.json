@@ -1,0 +1,15 @@
+{
+  "name": "armador-de-equipos",
+  "version": "1.0.0",
+  "description": "Armador de equipos de fútbol: pegá la lista del grupo y obtené equipos parejos.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes serve .",
+    "test": "node --test \"tests/*.test.js\"",
+    "lint": "npx --yes eslint@9 js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

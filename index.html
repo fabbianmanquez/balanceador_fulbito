@@ -160,17 +160,22 @@
   textarea{min-height:160px;font-weight:400;line-height:1.55;resize:vertical}
   input:focus-visible,textarea:focus-visible{outline:3px solid #ffe870;outline-offset:0}
 
-  /* hoja de anotador: renglones que acompañan al texto */
+  /* campo de lista: filas como las del editor de plantel, con franja dorada de acento */
   .taWrap{position:relative}
   textarea.lined{
-    line-height:28px;font-size:16px;font-weight:600;color:#1a2433;padding:8px 14px 8px 46px;min-height:336px;
-    background-color:#fffef9;background-attachment:local;background-repeat:no-repeat,repeat;
-    background-size:100% 100%,auto;background-position:0 0,0 8px;
+    --rh:30px;--gut:34px;
+    line-height:var(--rh);font-size:16px;font-weight:600;letter-spacing:.2px;color:#eef3fa;caret-color:var(--gold1);
+    padding:6px 14px 6px calc(var(--gut) + 14px);min-height:360px;
+    background-color:#132340;background-attachment:local;background-repeat:no-repeat,no-repeat,repeat;
+    background-size:100% 100%,100% 100%,auto;background-position:0 0,0 0,0 6px;
     background-image:
-      linear-gradient(90deg,transparent 0 36px,#e8a3a3 36px 37px,transparent 37px),
-      repeating-linear-gradient(180deg,transparent 0 27px,#c6d3e4 27px 28px)
+      linear-gradient(90deg,transparent 0 calc(var(--gut) - 2px),var(--gold2) calc(var(--gut) - 2px) var(--gut),transparent var(--gut)),
+      linear-gradient(90deg,#0a1428 0 calc(var(--gut) - 2px),transparent calc(var(--gut) - 2px)),
+      repeating-linear-gradient(180deg,
+        rgba(255,255,255,.075) 0 calc(var(--rh) - 1px),#060d1b calc(var(--rh) - 1px) var(--rh),
+        rgba(255,255,255,.02) var(--rh) calc(var(--rh)*2 - 1px),#060d1b calc(var(--rh)*2 - 1px) calc(var(--rh)*2))
   }
-  textarea.lined::placeholder{color:#8a97a8;font-weight:400}
+  textarea.lined::placeholder{color:#7f93b0;font-weight:400}
 
   /* globo de validacion en vivo */
   .pop{
@@ -395,11 +400,7 @@
     .sbox p{font-size:24px;padding:9px 6px}
     .sbox p.sm{font-size:17px}
     input[type=text],textarea{font-size:17px;padding:11px 13px}
-    textarea.lined{min-height:max(392px,calc(100vh - 460px));font-size:18px;line-height:32px;padding:10px 16px 10px 54px;
-      background-position:0 0,0 10px;
-      background-image:
-        linear-gradient(90deg,transparent 0 44px,#e8a3a3 44px 45px,transparent 45px),
-        repeating-linear-gradient(180deg,transparent 0 31px,#c6d3e4 31px 32px)}
+    textarea.lined{--rh:34px;--gut:40px;min-height:max(408px,calc(100vh - 460px));font-size:18px}
     .pop{font-size:15px;padding:9px 16px}
     .mbtn{font-size:18px;padding:15px 40px}
     .alert{font-size:15px;padding:10px 14px}

@@ -229,8 +229,49 @@
   }
   .card:focus-visible{outline:3px solid #ffe870;outline-offset:2px}
   .card .art{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;background:#0d1728}
-  .card .art svg,.card .art img{position:absolute;inset:0;width:100%;height:100%;display:block}
-  .card .art img{object-fit:cover;object-position:center 18%}
+  .card .art{container-type:size}
+
+  /* dibujo de cancha (tarjeta Importar lista): todo en cqw/cqh para ajustarse a la caja */
+  .apitch{position:absolute;inset:0;display:flex;flex-direction:column;
+    background:linear-gradient(180deg,#1b2129,#0c1015);font-size:clamp(9px,3.7cqw,20px)}
+  .ap-hd{margin:4cqh 4cqw 0;padding:.55em .9em;display:flex;align-items:center;gap:.8em;
+    background:linear-gradient(180deg,#2b3138,#0b0f14);border:2px solid #05101f;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);color:#fff;font-weight:700;letter-spacing:.22em;font-size:.95em}
+  .ap-hd i{width:1.5em;height:1.5em;border-radius:50%;border:2px solid #fff;flex:0 0 auto;
+    background:radial-gradient(circle at 35% 30%,#fff,#c3cbd4)}
+  .ap-field{position:relative;isolation:isolate;flex:1;min-height:0;margin-top:3cqh;
+    display:flex;flex-direction:column;justify-content:space-around;padding:3cqh 1cqw 5cqh}
+  .ap-field::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:polygon(7% 0,93% 0,100% 100%,0 100%);
+    background:
+      radial-gradient(circle at 50% -6%,transparent 0 13cqw,rgba(255,255,255,.16) 13cqw 13.7cqw,transparent 13.7cqw),
+      linear-gradient(180deg,#434c56,#2a3139)}
+  .ap-field::after{content:'';position:absolute;z-index:-1;left:20%;right:20%;bottom:0;height:34%;
+    border:2px solid rgba(255,255,255,.22);border-bottom:none;
+    background:linear-gradient(rgba(255,255,255,.22),rgba(255,255,255,.22)) center bottom/42% 40% no-repeat}
+  .ap-line{display:flex;justify-content:space-evenly;align-items:flex-start;gap:.5em}
+  .apitch .pl{max-width:none}
+  .apitch .dot{width:.85em;height:.85em}
+  .apitch .plate{font-size:1em;padding:.22em .85em}
+  .apitch .plate.gk{background:linear-gradient(180deg,#3d86ff,#0a44d8);color:#fff;border:1px solid #03246b;
+    text-shadow:0 1px 1px rgba(0,0,0,.45)}
+
+  /* dibujo de tabla (tarjeta Formato liga) */
+  .atabla{position:absolute;inset:0;display:flex;flex-direction:column;gap:.35em;padding:3.5cqh 3.5cqw;
+    background:linear-gradient(180deg,#16294a,#0a1428);font-size:clamp(8.5px,3.3cqw,17px)}
+  .at-tt{padding:.5em .8em;text-align:center;font-weight:700;letter-spacing:.2em;color:#fff;font-size:.95em;
+    background:linear-gradient(180deg,#2b3138,#0b0f14);border:2px solid #05101f;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+  .at-th,.at-tr{display:grid;grid-template-columns:1.8em 1fr repeat(5,1.9em);align-items:center;column-gap:.15em}
+  .at-th{background:linear-gradient(180deg,#3b4655,#1a222d);color:#e4eaf1;font-weight:700;padding:.3em .3em .3em 0;border:1px solid #05101f;font-size:.9em}
+  .at-th b{text-align:center}
+  .at-body{flex:1;min-height:0;display:flex;flex-direction:column;border:2px solid #05101f;background:#05101f;gap:1px}
+  .at-tr{flex:1;min-height:0;color:#12233d;font-weight:700;background:linear-gradient(180deg,#e9edf2,#c3ccd8)}
+  .at-tr:nth-child(even){background:linear-gradient(180deg,#dfe4eb,#b8c1cd)}
+  .at-tr.first{background:linear-gradient(180deg,#fff3a8,#e6bf2e)}
+  .at-tr b{display:grid;place-items:center;height:100%;background:rgba(0,0,0,.09);font-size:.95em}
+  .at-pos{text-align:center;font-weight:900}
+  .at-name{display:flex;align-items:center;gap:.5em;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .at-crest{flex:0 0 auto;width:1.25em;height:1.4em;border:1px solid #05101f;
+    clip-path:polygon(0 0,100% 0,100% 60%,50% 100%,0 60%)}
   .card .band{flex:0 0 auto;padding:16px 18px 20px}
   .card.blue .band{background:linear-gradient(180deg,#4784d3,#1c3d7c);color:#fff}
   .card.gold .band{background:linear-gradient(180deg,#d8c295,#7d6537);color:#1b1508}
@@ -1003,45 +1044,46 @@ document.addEventListener('click', e=>{
   else beep('move');
 }, true);
 
-const ART_LISTA =
-  '<svg class="art" viewBox="0 0 220 112" preserveAspectRatio="none" aria-hidden="true">'+
-    '<defs><linearGradient id="gl" x1="0" y1="0" x2="0" y2="1">'+
-      '<stop offset="0" stop-color="#26456f"/><stop offset="1" stop-color="#101f38"/></linearGradient></defs>'+
-    '<rect width="220" height="112" fill="url(#gl)"/>'+
-    '<g fill="#e9edf2" stroke="#04101f" stroke-width="2">'+
-      '<rect x="34" y="14" width="118" height="76" rx="6"/></g>'+
-    '<path d="M46 90 L46 104 L64 90 Z" fill="#e9edf2" stroke="#04101f" stroke-width="2"/>'+
-    '<g fill="#8d99a8">'+
-      '<rect x="46" y="26" width="26" height="7"/><rect x="78" y="26" width="60" height="7"/>'+
-      '<rect x="46" y="42" width="26" height="7"/><rect x="78" y="42" width="48" height="7"/>'+
-      '<rect x="46" y="58" width="26" height="7"/><rect x="78" y="58" width="56" height="7"/>'+
-      '<rect x="46" y="74" width="26" height="7"/><rect x="78" y="74" width="40" height="7"/></g>'+
-    '<g stroke="#04101f" stroke-width="2">'+
-      '<circle cx="176" cy="40" r="14" fill="#d8c295"/><circle cx="176" cy="76" r="14" fill="#4784d3"/></g>'+
-  '</svg>';const ART_LIGA =
-  '<svg class="art" viewBox="0 0 220 112" preserveAspectRatio="none" aria-hidden="true">'+
-    '<defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1">'+
-      '<stop offset="0" stop-color="#2d5ea8"/><stop offset="1" stop-color="#112a52"/></linearGradient></defs>'+
-    '<rect width="220" height="112" fill="url(#gg)"/>'+
-    '<g stroke="#04101f" stroke-width="2">'+
-      '<rect x="14" y="14" width="56" height="26" rx="4" fill="#d9342b"/>'+
-      '<rect x="82" y="14" width="56" height="26" rx="4" fill="#4f8fe6"/>'+
-      '<rect x="150" y="14" width="56" height="26" rx="4" fill="#4caf2f"/>'+
-      '<rect x="14" y="72" width="56" height="26" rx="4" fill="#f2c227"/>'+
-      '<rect x="82" y="72" width="56" height="26" rx="4" fill="#a875f0"/>'+
-      '<rect x="150" y="72" width="56" height="26" rx="4" fill="#e8e8e8"/></g>'+
-    '<g fill="none" stroke="#e9edf2" stroke-width="2.5" stroke-linecap="round">'+
-      '<path d="M42 40 V56 H178 V40"/><path d="M110 40 V72"/><path d="M42 72 V56"/><path d="M178 72 V56"/></g>'+
-  '</svg>';
+const artPl = (cls,name,gk) => '<div class="pl"><i class="dot '+cls+'"></i><span class="plate'+(gk?' gk':'')+'">'+name+'</span></div>';
+function artPitch(){
+  const line = a => '<div class="ap-line">'+a.join('')+'</div>';
+  return '<div class="apitch"><div class="ap-hd"><i></i>TU PLANTEL</div><div class="ap-field">'+
+    line([artPl('d-del','GALLO'), artPl('d-del','MATI')])+
+    line([artPl('d-med','FABI'), artPl('d-med','TIMO'), artPl('d-med','LUCHO')])+
+    line([artPl('d-def','NACHO'), artPl('d-def','PEPE')])+
+    line([artPl('d-por','JUAN',true)])+
+  '</div></div>';
+}
+const ART_TEAMS = [
+  ['Aston Birra',      '#d9342b','#f2c227', 4,1,1],
+  ['Casados FC',       '#2f6fe0','#ffffff', 4,0,2],
+  ['Solteros FC',      '#1c1f26','#e8e8e8', 3,2,1],
+  ['Inter Milanesa',   '#2f9e3a','#f2c227', 3,1,2],
+  ['Sporting Asado',   '#e8842a','#1c1f26', 2,2,2],
+  ['Deportivo Fernet', '#6a3fc4','#ffffff', 2,1,3],
+  ['Real Parrilla',    '#c4252b','#ffffff', 1,1,4],
+  ['Atlético Choripán','#2aa7c9','#1c1f26', 0,2,4]
+];
+function artTabla(){
+  const rows = ART_TEAMS.map((t,i)=>{
+    const [n,c1,c2,g,e,pe] = t, pj = g+e+pe, pt = g*3+e;
+    return '<div class="at-tr'+(i===0?' first':'')+'"><span class="at-pos">'+(i+1)+'</span>'+
+      '<span class="at-name"><i class="at-crest" style="background:linear-gradient(90deg,'+c1+' 0 50%,'+c2+' 50% 100%)"></i>'+n+'</span>'+
+      '<b>'+pt+'</b><b>'+pj+'</b><b>'+g+'</b><b>'+e+'</b><b>'+pe+'</b></div>';
+  }).join('');
+  return '<div class="atabla"><div class="at-tt">TABLA DE POSICIONES</div>'+
+    '<div class="at-th"><span></span><span>Equipo</span><b>Pt</b><b>PJ</b><b>G</b><b>E</b><b>P</b></div>'+
+    '<div class="at-body">'+rows+'</div></div>';
+}
 const SLIDES = [
-  { go:'importar', cls:'gold', img:'assets/importar-lista.jpg', art:'ART_LISTA',
+  { go:'importar', cls:'gold', img:'', art:'ART_LISTA',
     titulo:'IMPORTAR LISTA',
     texto:'Pegá el mensaje del grupo y armá dos equipos parejos de una.' },
   { go:'liga',     cls:'blue', img:'', art:'ART_LIGA',
     titulo:'FORMATO LIGA',
     texto:'Elegí cuántos equipos y cuántos jugadores por equipo, y armá 3 o más equipos parejos.' }
 ];
-const ARTS = {ART_LISTA: ()=>ART_LISTA, ART_LIGA: ()=>ART_LIGA};
+const ARTS = {ART_LISTA: artPitch, ART_LIGA: artTabla};
 
 function renderInicio(st){
   head('MENÚ','Armador de equipos','');

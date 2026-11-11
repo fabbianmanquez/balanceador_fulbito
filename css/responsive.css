@@ -8,6 +8,9 @@
   .tag,.count{padding:5px 12px}
   .tag b,.count b{font-size:10px}
   .snd{width:28px;height:24px;margin:auto 5px}
+  .navbtn{height:26px;padding:0 8px 0 6px;margin:0 4px 0 6px}
+  .homebtn{margin:0 6px 0 2px}
+  .homebtn img{height:26px}
   .stage{padding:9px;gap:8px}
   .stage.single .carousel{height:clamp(340px,calc(100vh - 200px),520px)}
   .brand img{height:42px}
@@ -52,8 +55,12 @@
   .pop{font-size:15px;padding:9px 16px 9px 24px}
   .mbtn{font-size:18px;padding:15px 40px}
   .alert{font-size:15px;padding:10px 14px}
-  .cmdbar{padding:14px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
-  .cmd{font-size:15px;padding:12px 16px 12px 10px}
+  .cmdbar{padding:14px 22px;gap:8px}
+  .cmd{flex:0 1 auto;font-size:15px;padding:12px 16px 12px 10px}
+  .navbtn{height:34px;padding:0 14px 0 10px;font-size:14px;margin:0 12px 0 14px}
+  .navbtn span{display:inline}
+  .homebtn{margin:0 16px 0 4px}
+  .homebtn img{height:40px}
   .cmd .k{width:26px;height:26px}
   .slidename{font-size:38px;padding:24px 14px}
   .thead{font-size:17px;padding:12px 18px}

@@ -38,36 +38,45 @@ export function head(tag,title,count){
   $('title').textContent = title;
   $('count').innerHTML = count || '&nbsp;';
 }
+// "Volver atrás" y "Menú principal" viven en la barra superior; los comandos que avanzan
+// (marcados con next) van al final de la barra de abajo, en la esquina derecha.
 export function setCmd(items){
-  $('cmdbar').innerHTML = items.map(it=>{
-    if(it.type==='spacer') return '<div class="divider"></div>';
-    return '<button class="cmd '+it.tone+'" data-act="'+it.act+'" title="'+esc(it.label)+'"'+
-      (it.off?' disabled':'')+'><span class="k">'+it.icon+'</span>'+esc(it.label)+'</button>';
-  }).join('');
+  const isNav = it => it.act==='back' || it.act==='home';
+  const rest = items.filter(it=>!isNav(it));
+  const ordered = rest.filter(it=>!it.next).concat(rest.filter(it=>it.next));
+  $('backBtn').hidden = !items.some(it=>it.act==='back');
+  $('homeBtn').classList.toggle('static', !items.some(it=>it.act==='home'));
+  $('cmdbar').innerHTML = ordered.map(it=>
+    '<button class="cmd '+it.tone+(it.next?' next':'')+'" data-act="'+it.act+'" title="'+esc(it.label)+'"'+
+      (it.off?' disabled':'')+'><span class="k">'+it.icon+'</span>'+esc(it.label)+'</button>').join('');
   $('cmdbar').querySelectorAll('button').forEach(b=>
     b.addEventListener('click', ()=> ACTIONS[b.dataset.act] && ACTIONS[b.dataset.act]()));
+}
+export function initNav(){
+  ['backBtn','homeBtn'].forEach(id=>
+    $(id).addEventListener('click', ()=> ACTIONS[$(id).dataset.act]()));
 }
 
 const CMD = {
   back:   {act:'back',        tone:'t-back',  icon:ic('back'),    label:'Volver atrás'},
   home:   {act:'home',        tone:'t-home',  icon:ic('home'),    label:'Menú principal'},
-  nivel:  {act:'startSlides', tone:'t-go',    icon:ic('levels'),  label:'Armar plantel'},
-  plantel:{act:'finishSlides',tone:'t-go',    icon:ic('check'),   label:'Ir al plantel'},
-  armar:  {act:'armar',       tone:'t-go',    icon:ic('ball'),    label:'Armar equipos'},
-  formato:{act:'formatoOk',   tone:'t-go',    icon:ic('check'),   label:'Continuar'},
+  leer:   {act:'readList',    tone:'t-go',    icon:ic('check'),   label:'Leer la lista',  next:true},
+  nivel:  {act:'startSlides', tone:'t-go',    icon:ic('levels'),  label:'Armar plantel',  next:true},
+  plantel:{act:'finishSlides',tone:'t-go',    icon:ic('check'),   label:'Ir al plantel',  next:true},
+  armar:  {act:'armar',       tone:'t-go',    icon:ic('ball'),    label:'Armar equipos',  next:true},
+  formato:{act:'formatoOk',   tone:'t-go',    icon:ic('check'),   label:'Continuar',      next:true},
   vaciar: {act:'clearAll',    tone:'t-del',   icon:ic('trash'),   label:'Vaciar plantel'},
   editOff:{act:'editOff',     tone:'t-edit',  icon:ic('pencil'),  label:'Terminar edición'},
   vista:  {act:'toggleView',  tone:'t-alt',   icon:ic('swap'),    label:'Cambiar vista'},
   rand:   {act:'reroll',      tone:'t-rand',  icon:ic('shuffle'), label:'Volver a mezclar equipos'},
-  share:  {act:'toggleShare', tone:'t-share', icon:ic('chat'),    label:'Compartir por WhatsApp'},
+  share:  {act:'toggleShare', tone:'t-share', icon:ic('chat'),    label:'Compartir por WhatsApp', next:true},
   img:    {act:'sendImage',   tone:'t-share', icon:ic('image'),   label:'Enviar imagen por WhatsApp'},
   copiar: {act:'copyShare',   tone:'t-share', icon:ic('copy'),    label:'Copiar texto'}
 };
 export const cmd = (key, over) => Object.assign({}, CMD[key], over||{});
 export const navBack = extra => {
   const acts = extra || [];
-  return acts.length ? acts.concat([{type:'spacer'}, cmd('back'), cmd('home')])
-                     : [cmd('back'), cmd('home')];
+  return acts.concat([cmd('back'), cmd('home')]);
 };
 export const alertBox = () => S.alert ? '<div class="alert">'+S.alert+'</div>' : '';
 

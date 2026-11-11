@@ -46,7 +46,7 @@
 .cmdbar{
   background:linear-gradient(180deg,#2a3441,#080c12 55%,#000);
   border-top:2px solid #05101f;box-shadow:inset 0 1px 0 rgba(255,255,255,.16);
-  padding:9px 10px;display:flex;flex-direction:column;align-items:stretch;gap:5px
+  padding:9px 10px;display:flex;flex-wrap:wrap;align-items:stretch;gap:6px
 }
 .cmdbar:empty{display:none}
 .cmd{
@@ -55,10 +55,11 @@
   background:linear-gradient(180deg,#5a6b80,#1b2531 52%,#0d141d);
   border:1px solid #05101f;border-radius:3px;
   color:#fff;font-family:inherit;font-size:13px;font-weight:700;font-style:italic;letter-spacing:.3px;
-  width:100%;justify-content:flex-start;text-align:left;
+  flex:1 1 auto;justify-content:flex-start;text-align:left;
   padding:9px 14px 9px 8px;text-shadow:1px 1px 0 #000;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 2px 0 rgba(0,0,0,.6)
 }
+.cmd.next{flex:0 0 auto;margin-left:auto}
 .cmd:hover:not(:disabled){
   background:linear-gradient(180deg,var(--acc),var(--acc2));
   border-color:#05101f;color:#0a1017;text-shadow:0 1px 0 rgba(255,255,255,.45)}
@@ -81,7 +82,6 @@
 .t-edit {--acc:#ffe870; --acc2:#b98c05}
 .t-del  {--acc:#f2938a; --acc2:#8c2119}
 .cmd .k svg,.snd svg,.cnav svg{display:block;margin:auto}
-.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);margin:3px 0}
 
 /* ---- slides ---- */
 .slide{animation:slideIn .24s cubic-bezier(.2,.7,.3,1)}
@@ -121,6 +121,11 @@
   background:
     radial-gradient(circle at 50% -6%,transparent 0 52px,rgba(255,255,255,.16) 52px 54px,transparent 54px),
     linear-gradient(180deg,#434c56,#2a3139)
+}
+.pitch.oscuro::before{
+  background:
+    radial-gradient(circle at 50% -6%,transparent 0 52px,rgba(255,255,255,.18) 52px 54px,transparent 54px),
+    linear-gradient(180deg,#505b66,#353e49)
 }
 .pitch::after{
   content:'';position:absolute;z-index:-1;left:20%;right:20%;bottom:0;height:30%;

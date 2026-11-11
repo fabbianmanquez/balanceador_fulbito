@@ -37,8 +37,20 @@ body{
 }
 .tag[hidden]{display:none}
 .tag b{transform:skewX(16deg);font-size:12px;font-style:italic;letter-spacing:.6px;text-shadow:1px 1px 0 #05101f}
-.brand-mark{align-self:center;height:31px;width:auto;margin:0 2px 0 12px;flex:0 0 auto;
-  filter:drop-shadow(0 1px 1px rgba(0,0,0,.45))}
+.navbtn{
+  align-self:center;display:flex;align-items:center;justify-content:center;gap:4px;height:28px;padding:0 10px 0 7px;
+  margin:0 8px 0 8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;font-style:italic;color:#fff;
+  background:linear-gradient(180deg,#5a6b80,#141c26);border:1px solid #05101f;border-radius:3px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3);text-shadow:1px 1px 0 #000
+}
+.navbtn[hidden]{display:none}
+.navbtn span{display:none}
+.navbtn:hover{background:linear-gradient(180deg,#ffe870,#c99a08);color:#101820;text-shadow:none}
+.homebtn{align-self:center;display:grid;place-items:center;margin:0 10px 0 4px;padding:0;border:none;background:none;cursor:pointer}
+.homebtn img{display:block;height:31px;width:auto;filter:drop-shadow(0 1px 1px rgba(0,0,0,.45));transition:transform .1s ease,filter .15s ease}
+.homebtn:hover img{filter:drop-shadow(0 1px 1px rgba(0,0,0,.45)) brightness(1.18)}
+.homebtn:active img{transform:scale(.94)}
+.homebtn.static{pointer-events:none}
 .ttl{
   flex:1;display:flex;align-items:center;justify-content:center;
   font-size:16px;font-weight:700;font-style:italic;letter-spacing:1.2px;color:#131c26;
@@ -46,7 +58,7 @@ body{
 }
 .count{
   background:linear-gradient(180deg,#4d5a6b,#141c26);color:#ffe870;display:flex;align-items:center;
-  padding:6px 16px;transform:skewX(-16deg);margin-right:-8px;border-left:2px solid #05101f;
+  padding:6px 16px;transform:skewX(-16deg);margin-right:6px;border-left:2px solid #05101f;
 }
 .count b{transform:skewX(16deg);font-size:12px;letter-spacing:.6px}
 

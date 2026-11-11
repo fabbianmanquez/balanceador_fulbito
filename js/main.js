@@ -13,6 +13,7 @@ import { ACTIONS, render, SCREENS } from './router.js';
 import { renderSlides } from './screens/slides.js';
 import { beep, initSound } from './sound.js';
 import { S } from './state.js';
+import { initNav } from './ui.js';
 import { $ } from './utils.js';
 
 document.addEventListener('keydown', e=>{
@@ -37,4 +38,5 @@ Object.assign(SCREENS, {
 });
 initSound();
 initIdle();
+initNav();
 render();

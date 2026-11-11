@@ -2,6 +2,7 @@
 
 import { applyLabels, buildCandidates } from './balance.js';
 import { commitName, focusName } from './screens/carga.js';
+import { readList } from './screens/importar.js';
 import { renderTeamsImage } from './image.js';
 import { matchFor } from './match.js';
 import { dupInfo } from './parser.js';
@@ -14,6 +15,7 @@ import { $ } from './utils.js';
 Object.assign(ACTIONS, {
   home(){ S.step='inicio'; S.alert=''; S.raw=''; S.draft=[]; S.players=[]; S.venue=''; render(); },
   formatoOk(){ S.step='importar'; render(); },
+  readList(){ readList(); },
   back(){
     S.alert='';
     if(S.step==='slides'){

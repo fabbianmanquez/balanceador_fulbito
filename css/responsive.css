@@ -1,0 +1,67 @@
+/* Ajustes para celular y escritorio, y reducción de animaciones */
+
+/* pantallas chicas: la barra superior dejaba de entrar */
+@media (max-width:520px){
+  body{padding:6px}
+  .tv{border-width:2px}
+  .ttl{font-size:13px;letter-spacing:.5px;padding:6px 4px}
+  .tag,.count{padding:5px 12px}
+  .tag b,.count b{font-size:10px}
+  .snd{width:28px;height:24px;margin:auto 5px}
+  .stage{padding:9px;gap:8px}
+  .stage.single .carousel{height:clamp(340px,calc(100vh - 130px),560px)}
+  .card h3{font-size:15px;letter-spacing:1.1px}
+  .card p{font-size:11px}
+  .mbtn{font-size:14px;padding:10px 30px}
+  .slidename{font-size:22px;padding:12px 8px}
+  .cmd{font-size:12px;padding:8px 12px 8px 7px}
+  .list{max-height:44vh}
+  .thead{font-size:12px;letter-spacing:1.2px;padding:7px 10px}
+  .pitch{gap:14px;padding:20px 2px 12px}
+  .pl{max-width:86px}
+  .plate{font-size:10px;padding:3px 5px;letter-spacing:0}
+}
+
+/* ---- escritorio: la app ocupa la ventana en vez de quedar chica arriba ---- */
+@media (min-width:1024px){
+  body{padding:20px 28px}
+  .tv{
+    max-width:1360px;min-height:calc(100vh - 40px);border-radius:6px;
+    display:flex;flex-direction:column;
+  }
+  .stage{flex:1 1 auto;align-content:center;padding:22px;gap:18px}
+  .stage.single{max-width:760px;width:100%}
+  .stage.single .carousel{max-width:560px;height:clamp(460px,calc(100vh - 260px),760px)}
+  .topbar{min-height:54px}
+  .tag{padding:8px 28px}
+  .tag b,.count b{font-size:15px}
+  .count{padding:8px 24px}
+  .ttl{font-size:21px}
+  .phead{font-size:14px;padding:7px 12px;margin-bottom:7px}
+  .panel{padding:8px}
+  .list{max-height:calc(100vh - 380px);min-height:220px;gap:4px;padding:5px}
+  .row{font-size:17px;padding:10px 14px}
+  .row .del{width:28px;height:28px}
+  .sbox h4{font-size:13px;padding:5px 10px}
+  .sbox p{font-size:24px;padding:9px 6px}
+  .sbox p.sm{font-size:17px}
+  input[type=text],textarea{font-size:17px;padding:11px 13px}
+  textarea.lined{--rh:34px;min-height:max(408px,calc(100vh - 460px));font-size:18px;padding:6px 18px}
+  .pop{font-size:15px;padding:9px 16px 9px 24px}
+  .mbtn{font-size:18px;padding:15px 40px}
+  .alert{font-size:15px;padding:10px 14px}
+  .cmdbar{padding:14px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+  .cmd{font-size:15px;padding:12px 16px 12px 10px}
+  .cmd .k{width:26px;height:26px}
+  .slidename{font-size:38px;padding:24px 14px}
+  .thead{font-size:17px;padding:12px 18px}
+  .pitch{min-height:430px;gap:24px;padding:34px 10px 18px}
+  .pl{max-width:150px}
+  .plate{font-size:15px;padding:4px 14px}
+}
+
+/* respeto por quien pide menos animacion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+  .track{transition:none}
+}

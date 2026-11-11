@@ -1,0 +1,53 @@
+/* Variables de diseño, reset, contenedor principal y barra superior */
+
+:root{
+  --nav1:#3f78c4; --nav2:#1d3f7d; --nav3:#0b1e3f;
+  --red1:#c0524a; --red2:#7d2b25;
+  --steel-hi:#eef1f5; --steel-mid:#c2cad4; --steel-lo:#98a3b1;
+  --chrome1:#f6f8fa; --chrome2:#c9d1da; --chrome3:#8d99a8;
+  --dark1:#3b4655; --dark2:#0e141d;
+  --ink:#101820; --ink-soft:#41505f;
+  --gold1:#ffe870; --gold2:#dfae15; --goldbd:#8a6a06;
+  --a1:#d9342b; --a2:#e8842a; --a3:#4caf2f; --a4:#a8dc2e; --a5:#f2c227;
+  --font:'Chakra Petch','Arial Narrow',Arial,Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font);
+  background:radial-gradient(ellipse at 50% -10%,#4a80c9 0%,#224d92 35%,#0b1e3f 100%) fixed;
+  color:var(--ink);min-height:100vh;padding:10px;-webkit-font-smoothing:antialiased;
+}
+.tv{
+  width:100%;max-width:960px;margin:0 auto;border:3px solid #05101f;border-radius:3px;
+  background:linear-gradient(180deg,#20365c,#0d1c33);
+  box-shadow:0 0 0 1px #55708f,0 12px 34px rgba(0,0,0,.55);overflow:hidden;
+}
+
+/* ---- barra superior tipo "Result" ---- */
+.topbar{
+  display:flex;align-items:stretch;
+  background:linear-gradient(180deg,var(--chrome1) 0%,var(--chrome2) 46%,var(--chrome3) 54%,#e4e9ef 100%);
+  border-bottom:2px solid #05101f;
+}
+.tag{
+  background:linear-gradient(180deg,var(--nav1),var(--nav2));color:#fff;
+  display:flex;align-items:center;padding:6px 18px;transform:skewX(-16deg);margin-left:-8px;
+  border-right:2px solid #05101f;
+}
+.tag[hidden]{display:none}
+.tag b{transform:skewX(16deg);font-size:12px;font-style:italic;letter-spacing:.6px;text-shadow:1px 1px 0 #05101f}
+.ttl{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;font-style:italic;letter-spacing:1.2px;color:#131c26;
+  text-shadow:0 1px 0 rgba(255,255,255,.8);padding:6px 10px;text-align:center;
+}
+.count{
+  background:linear-gradient(180deg,#4d5a6b,#141c26);color:#ffe870;display:flex;align-items:center;
+  padding:6px 16px;transform:skewX(-16deg);margin-right:-8px;border-left:2px solid #05101f;
+}
+.count b{transform:skewX(16deg);font-size:12px;letter-spacing:.6px}
+
+.stage{padding:12px;display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.stage.single{grid-template-columns:1fr;max-width:560px;margin:0 auto}
+@media (max-width:700px){ .stage{grid-template-columns:1fr} }

@@ -1,0 +1,135 @@
+/* Paneles, listas, botones de menú, formularios y globo de validación */
+
+/* ---- panel base ---- */
+.panel{
+  background:linear-gradient(180deg,var(--steel-hi),var(--steel-mid) 58%,var(--steel-lo));
+  border:2px solid #05101f;border-radius:2px;
+  box-shadow:inset 0 1px 0 #fff,0 3px 8px rgba(0,0,0,.45);padding:5px;
+}
+.phead{
+  background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#fff;
+  font-size:12px;font-weight:700;font-style:italic;letter-spacing:.8px;
+  padding:4px 10px;text-align:center;margin-bottom:5px;border:1px solid #05101f;
+  text-shadow:1px 1px 0 #000;
+}
+.phead.claro{background:linear-gradient(180deg,#fff,#c9d1da);color:#101820;text-shadow:none}
+.phead.oscuro{background:linear-gradient(180deg,#2b3138,#05080c)}
+
+/* ---- lista tipo editor PES ---- */
+.list{
+  background:#132340;border:2px solid #05101f;padding:3px;
+  display:flex;flex-direction:column;gap:2px;max-height:50vh;overflow:auto;
+}
+.row{
+  display:flex;align-items:center;gap:8px;width:100%;text-align:left;cursor:pointer;
+  background:linear-gradient(180deg,#e9edf2,#c3ccd8);
+  border:1px solid #7d8898;border-radius:1px;padding:5px 8px;
+  font-family:inherit;font-size:14px;font-weight:700;color:#12233d;
+}
+.row:hover{background:linear-gradient(180deg,#fbfcfd,#d6dde6)}
+.row.sel{background:linear-gradient(180deg,#fff,#eef1f5);border:2px solid #c0271d;
+  box-shadow:0 0 0 1px #ffe870}
+.row.gk{background:linear-gradient(180deg,#3d86ff,#0a44d8);border:1px solid #03246b;color:#fff;
+  text-shadow:0 1px 1px rgba(0,0,0,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.row.empty{color:#7b8797;font-weight:400;font-style:normal}
+.row:focus-visible{outline:3px solid #ffe870;outline-offset:1px}
+.row.dup{background:linear-gradient(180deg,#fde7e4,#f2b9b2);border:2px solid #c0271d}
+.badge.rep{background:linear-gradient(180deg,var(--red1),var(--red2));border:1px solid #4d0f0b}
+.row input.nm-edit{flex:1;min-width:0;width:auto;font:inherit;padding:3px 7px;
+  border:1px solid #c0271d;border-radius:2px;background:#fff;color:#12233d;box-shadow:none;cursor:text}
+.row .sug{font-family:inherit;font-size:12px;font-weight:700;font-style:italic;cursor:pointer;
+  background:linear-gradient(180deg,var(--gold1),var(--gold2));color:#2a2100;border:1px solid var(--goldbd);
+  border-radius:2px;padding:3px 8px;flex:0 0 auto;white-space:nowrap}
+.row .sug:hover{filter:brightness(1.08)}
+.row .del{background:linear-gradient(180deg,#d0554c,#8c241d);color:#fff;border:1px solid #4d0f0b;
+  border-radius:2px;font-weight:900;width:22px;height:22px;cursor:pointer;flex:0 0 auto;line-height:1}
+
+.badge{
+  background:linear-gradient(180deg,#4d5a6b,#141c26);color:#fff;font-size:10px;font-weight:700;
+  letter-spacing:.6px;padding:2px 5px;border-radius:1px;min-width:34px;text-align:center;
+  text-shadow:1px 1px 0 #000;flex:0 0 auto;
+}
+.badge.por{background:linear-gradient(180deg,var(--gold1),var(--gold2));color:#2a2100;text-shadow:none;border:1px solid var(--goldbd)}
+.nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arw{display:block;flex:0 0 auto}
+
+/* ---- caja de dato (tipo Rating / Points) ---- */
+.sbox{border:2px solid #05101f;margin-bottom:5px;background:#fff}
+.sbox h4{margin:0;background:linear-gradient(180deg,var(--dark1),var(--dark2));color:#fff;
+  font-size:11px;font-style:italic;letter-spacing:.8px;padding:3px 8px;text-align:center;text-shadow:1px 1px 0 #000}
+.sbox p{margin:0;background:linear-gradient(180deg,#fff,#cfd6de);text-align:center;
+  font-size:19px;font-weight:700;padding:5px 4px;color:#101820}
+.sbox p.sm{font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+
+/* ---- menu tipo "Exit match series" ---- */
+.menu{display:flex;flex-direction:column;gap:2px;padding:2px}
+.mbtn{
+  position:relative;width:100%;font-family:inherit;font-size:16px;font-weight:700;font-style:italic;
+  letter-spacing:.4px;padding:11px 34px;cursor:pointer;color:#101820;
+  background:linear-gradient(180deg,#f2f5f8,#c6cdd7);border:1px solid #6b7686;
+  display:flex;align-items:center;justify-content:center;gap:10px;line-height:1.25;
+}
+.mbtn:hover:not(:disabled),.mbtn.on{
+  background:linear-gradient(180deg,var(--gold1),var(--gold2));border-color:var(--goldbd)}
+.mbtn.on::after{
+  content:'';position:absolute;right:6px;border-style:solid;border-width:7px 9px 7px 0;
+  border-color:transparent #c0271d transparent transparent}
+.mbtn:disabled{opacity:.4;cursor:not-allowed;background:linear-gradient(180deg,#dfe3e8,#b8bfc8)}
+.mbtn .lead{position:absolute;left:8px;display:flex;align-items:center}
+
+/* ---- formularios ---- */
+input[type=text],textarea{
+  width:100%;font-family:inherit;font-size:15px;font-weight:700;padding:7px 9px;
+  border:2px solid #05101f;border-radius:1px;background:#fff;color:var(--ink);
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.2)
+}
+textarea{min-height:160px;font-weight:400;line-height:1.55;resize:vertical}
+input:focus-visible,textarea:focus-visible{outline:3px solid #ffe870;outline-offset:0}
+
+/* campo de lista: renglones en verde de cancha con letra blanca */
+.taWrap{position:relative}
+textarea.lined{
+  --rh:30px;
+  line-height:var(--rh);font-size:16px;font-weight:700;letter-spacing:.2px;color:#fff;caret-color:var(--gold1);
+  text-shadow:0 1px 2px rgba(0,0,0,.55);
+  padding:6px 14px;min-height:360px;
+  background-color:#2f7d2c;background-attachment:local;background-repeat:repeat;background-position:0 6px;
+  background-image:repeating-linear-gradient(180deg,
+    #3a8f35 0 calc(var(--rh) - 1px),#14401a calc(var(--rh) - 1px) var(--rh),
+    #2e7c2b var(--rh) calc(var(--rh)*2 - 1px),#14401a calc(var(--rh)*2 - 1px) calc(var(--rh)*2))
+}
+textarea.lined::placeholder{color:rgba(255,255,255,.65);font-weight:500;text-shadow:none}
+
+/* globo de validacion en vivo */
+.pop{
+  position:absolute;right:12px;bottom:12px;max-width:calc(100% - 24px);z-index:2;
+  padding:7px 13px;border:2px solid #05101f;border-radius:3px;
+  font-size:13px;font-weight:700;letter-spacing:.2px;line-height:1.3;color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.55);
+  box-shadow:0 3px 10px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.3);
+  animation:popIn .2s cubic-bezier(.2,.9,.3,1.3)
+}
+.pop[hidden]{display:none}
+.taWrap .pop{border-color:#fff;box-shadow:0 0 0 2px #05101f,0 4px 12px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.3)}
+.pop.inline{position:relative;display:block;margin-top:6px;max-width:none;animation:none}
+.pop b{color:#ffe870}
+.pop{--st:#5ddf3a;padding-left:20px;background:linear-gradient(180deg,var(--nav1),var(--nav2))}
+.pop::before{content:'';position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--st)}
+.pop.ok{--st:#5ddf3a}
+.pop.warn{--st:#f2a93b}
+.pop.bad{--st:#ef5b50}
+@keyframes popIn{from{opacity:0;transform:translateY(8px) scale(.94)}to{opacity:1;transform:none}}
+
+.arrows{display:flex;gap:4px;margin-top:6px}
+.arrows button{
+  flex:1;background:linear-gradient(180deg,#f2f5f8,#c6cdd7);border:1px solid #6b7686;
+  padding:9px 2px;cursor:pointer;display:grid;place-items:center
+}
+.arrows button.on{background:linear-gradient(180deg,var(--gold1),var(--gold2));border-color:var(--goldbd)}
+.arrows button:disabled{opacity:.35;cursor:not-allowed}
+
+.alert{
+  grid-column:1/-1;background:linear-gradient(180deg,var(--red1),var(--red2));color:#fff;
+  border:2px solid #05101f;padding:6px 10px;font-size:13px;font-weight:700;text-align:center;
+  text-shadow:1px 1px 0 #000
+}
+.alert b{color:#ffe870}

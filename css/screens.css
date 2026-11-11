@@ -1,0 +1,152 @@
+/* Pantallas: formato liga, avisos, barra de comandos, niveles y vista en cancha */
+
+/* selector de formato liga */
+.strow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 4px}
+.strow label{font-size:15px;font-weight:700;color:#12233d}
+.stepper{display:flex;align-items:stretch;border:2px solid #05101f;background:#fff}
+.stbtn{width:44px;font-family:inherit;font-size:22px;font-weight:900;cursor:pointer;color:#101820;border:none;
+  background:linear-gradient(180deg,#f2f5f8,#c6cdd7)}
+.stbtn:hover:not(:disabled){background:linear-gradient(180deg,var(--gold1),var(--gold2))}
+.stbtn:disabled{opacity:.35;cursor:not-allowed}
+.stval{min-width:54px;display:grid;place-items:center;font-size:22px;font-weight:700;color:#101820;
+  border-left:2px solid #05101f;border-right:2px solid #05101f}
+
+/* aviso flotante */
+.toast{position:fixed;left:16px;right:16px;margin:0 auto;width:fit-content;bottom:22px;z-index:60;max-width:calc(100% - 32px);
+  padding:10px 18px;border:2px solid #fff;border-radius:3px;font-size:14px;font-weight:700;line-height:1.3;color:#fff;
+  text-align:center;text-shadow:1px 1px 0 rgba(0,0,0,.55);
+  background:linear-gradient(180deg,var(--nav1),var(--nav2));
+  box-shadow:0 0 0 2px #05101f,0 6px 18px rgba(0,0,0,.6);animation:popIn .2s cubic-bezier(.2,.9,.3,1.3)}
+
+/* cartel de confirmacion */
+.modal-ov{position:fixed;inset:0;z-index:50;background:rgba(3,10,25,.72);display:grid;place-items:center;padding:18px;
+  animation:ovIn .15s ease-out}
+.modal{width:100%;max-width:430px;background:linear-gradient(180deg,var(--steel-hi),var(--steel-mid) 58%,var(--steel-lo));
+  border:2px solid #05101f;box-shadow:inset 0 1px 0 #fff,0 14px 40px rgba(0,0,0,.65);padding:6px;
+  animation:popIn .2s cubic-bezier(.2,.9,.3,1.3)}
+.modal p{margin:10px 8px 12px;font-size:17px;font-weight:700;line-height:1.4;color:#101820;text-align:center}
+@keyframes ovIn{from{opacity:0}to{opacity:1}}
+
+/* varios equipos (formato liga) */
+.stage.multi{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.stage.multi .plate{font-size:11px;padding:3px 6px}
+.stage.multi .pl{max-width:96px}
+
+/* iconos de nivel especiales */
+.lic{display:block;flex:0 0 auto;object-fit:contain}
+
+.snd{
+  background:linear-gradient(180deg,#5a6b80,#141c26);color:#fff;border:1px solid #05101f;
+  border-radius:3px;width:32px;height:26px;margin:auto 8px;cursor:pointer;font-size:13px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3)
+}
+.snd:hover{background:linear-gradient(180deg,#ffe870,#c99a08);color:#101820}
+
+/* ---- barra de comandos ---- */
+.cmdbar{
+  background:linear-gradient(180deg,#2a3441,#080c12 55%,#000);
+  border-top:2px solid #05101f;box-shadow:inset 0 1px 0 rgba(255,255,255,.16);
+  padding:9px 10px;display:flex;flex-direction:column;align-items:stretch;gap:5px
+}
+.cmdbar:empty{display:none}
+.cmd{
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+  --acc:#8fa0b5; --acc2:#3d4c5e;
+  background:linear-gradient(180deg,#5a6b80,#1b2531 52%,#0d141d);
+  border:1px solid #05101f;border-radius:3px;
+  color:#fff;font-family:inherit;font-size:13px;font-weight:700;font-style:italic;letter-spacing:.3px;
+  width:100%;justify-content:flex-start;text-align:left;
+  padding:9px 14px 9px 8px;text-shadow:1px 1px 0 #000;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 2px 0 rgba(0,0,0,.6)
+}
+.cmd:hover:not(:disabled){
+  background:linear-gradient(180deg,var(--acc),var(--acc2));
+  border-color:#05101f;color:#0a1017;text-shadow:0 1px 0 rgba(255,255,255,.45)}
+.cmd:active:not(:disabled){transform:translateY(2px);box-shadow:inset 0 2px 4px rgba(0,0,0,.55)}
+.cmd:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.cmd:disabled{opacity:.32;cursor:not-allowed;box-shadow:none}
+.cmd .k{
+  width:22px;height:22px;border-radius:3px;display:grid;place-items:center;font-size:13px;
+  font-style:normal;font-weight:900;line-height:1;color:#0a1017;
+  background:linear-gradient(180deg,var(--acc),var(--acc2));
+  border:1px solid rgba(0,0,0,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cmd:hover:not(:disabled) .k{background:linear-gradient(180deg,#fff,#dfe6ee)}
+
+.t-back {--acc:#f07a70; --acc2:#8f2b24}
+.t-home {--acc:#b79bf0; --acc2:#4e2f9c}
+.t-go   {--acc:#7ede81; --acc2:#1f7a28}
+.t-alt  {--acc:#f7b45c; --acc2:#a35d0c}
+.t-rand {--acc:#6fc4ef; --acc2:#155e93}
+.t-share{--acc:#5df08c; --acc2:#0f8a3d}
+.t-edit {--acc:#ffe870; --acc2:#b98c05}
+.t-del  {--acc:#f2938a; --acc2:#8c2119}
+.cmd .k svg,.snd svg,.cnav svg{display:block;margin:auto}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);margin:3px 0}
+
+/* ---- slides ---- */
+.slide{animation:slideIn .24s cubic-bezier(.2,.7,.3,1)}
+@keyframes slideIn{from{opacity:0;transform:translateX(48px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ .slide{animation:none} }
+.slidename{
+  background:linear-gradient(180deg,#132340,#0a1428);color:#fff;border:2px solid #05101f;
+  text-align:center;font-size:28px;font-weight:700;font-style:italic;padding:16px 10px;
+  margin-bottom:6px;text-shadow:2px 2px 0 #000;overflow-wrap:anywhere
+}
+.dots{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;padding:8px 4px 3px}
+.dot{width:9px;height:9px;border-radius:50%;background:#8996a6;border:1px solid #05101f}
+.dot.done{background:var(--a3)}
+.dot.cur{background:var(--gold1);transform:scale(1.45)}
+
+/* ---- cancha (estilo plantel de PES) ---- */
+.thead{
+  display:flex;align-items:center;gap:10px;padding:9px 14px;margin-bottom:6px;
+  background:linear-gradient(180deg,#2b3138,#0b0f14);border:2px solid #05101f;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
+  color:#fff;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase
+}
+.thead .sw{width:22px;height:22px;border-radius:50%;border:2px solid #fff;flex:0 0 auto;
+  box-shadow:0 1px 3px rgba(0,0,0,.6)}
+.thead.claro .sw{background:radial-gradient(circle at 35% 30%,#fff,#c3cbd4)}
+.thead.oscuro .sw{background:radial-gradient(circle at 35% 30%,#56616d,#090c10)}
+.thead.num .sw{display:none}
+
+.pitch{
+  position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:space-around;
+  gap:18px;min-height:320px;padding:26px 6px 14px;overflow:hidden;
+  background:linear-gradient(180deg,#171c22,#0d1116);border:2px solid #05101f
+}
+.pitch::before{
+  content:'';position:absolute;inset:0;z-index:-1;
+  clip-path:polygon(7% 0,93% 0,100% 100%,0 100%);
+  background:
+    radial-gradient(circle at 50% -6%,transparent 0 52px,rgba(255,255,255,.16) 52px 54px,transparent 54px),
+    linear-gradient(180deg,#434c56,#2a3139)
+}
+.pitch::after{
+  content:'';position:absolute;z-index:-1;left:20%;right:20%;bottom:0;height:30%;
+  border:2px solid rgba(255,255,255,.22);border-bottom:none;
+  background:linear-gradient(rgba(255,255,255,.22),rgba(255,255,255,.22)) center bottom/42% 42% no-repeat;
+}
+.pline{display:flex;justify-content:space-evenly;align-items:flex-start;gap:12px 6px;flex-wrap:wrap}
+.pl{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;max-width:112px}
+.pl .dot{width:12px;height:12px;border-radius:50%;border:1px solid #05101f;
+  box-shadow:inset 0 -2px 3px rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.6)}
+.dot.d-del{background:radial-gradient(circle at 35% 30%,#ff9288,#c4241b)}
+.dot.d-med{background:radial-gradient(circle at 35% 30%,#8be879,#2c9a1f)}
+.dot.d-def{background:radial-gradient(circle at 35% 30%,#8fb4ff,#2352b8)}
+.dot.d-por{background:radial-gradient(circle at 35% 30%,#fff09a,#d7a60c)}
+.plate{
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  background:linear-gradient(180deg,#fff,#cdd3da);color:#121820;
+  font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;
+  padding:3px 10px;border-radius:2px;
+  box-shadow:0 2px 4px rgba(0,0,0,.65),inset 0 -2px 0 rgba(0,0,0,.18)
+}
+.pitch.oscuro .plate{
+  background:linear-gradient(180deg,#3b434d,#10151b);color:#fff;
+  border:1px solid rgba(255,255,255,.5)
+}
+.pitch .plate.gk{
+  background:linear-gradient(180deg,#3d86ff,#0a44d8);color:#fff;border:1px solid #03246b;
+  text-shadow:0 1px 1px rgba(0,0,0,.45)
+}

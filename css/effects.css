@@ -1,0 +1,39 @@
+/* Detalles de pulido: selección, scrollbars, transiciones y foco */
+
+/* ============================================================
+   PULIDO VISUAL
+   ============================================================ */
+
+/* selección de texto en la paleta de la app */
+::selection{background:var(--gold1);color:#101820}
+
+/* barras de scroll oscuras: la clara rompía el panel azul */
+.list,textarea{scrollbar-width:thin;scrollbar-color:#4a5a6e #0a1428}
+.list::-webkit-scrollbar,textarea::-webkit-scrollbar{width:10px;height:10px}
+.list::-webkit-scrollbar-track,textarea::-webkit-scrollbar-track{background:#0a1428}
+.list::-webkit-scrollbar-thumb,textarea::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,#63758c,#26313f);
+  border:1px solid #05101f;border-radius:2px}
+.list::-webkit-scrollbar-thumb:hover,textarea::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,var(--gold1),var(--gold2))}
+
+/* transiciones cortas: el cambio de estado ya no es un salto seco */
+.row,.mbtn,.arrows button,.cmd,.card,.cnav,.snd,.cdots button,.del{
+  transition:background .15s ease,border-color .15s ease,color .15s ease,
+             box-shadow .15s ease,transform .1s ease}
+
+/* foco visible uniforme para teclado */
+button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:3px solid var(--gold1);outline-offset:2px}
+
+/* la fila seleccionada gana una barra de acento a la izquierda */
+.row.sel{position:relative;padding-left:12px}
+.row.sel::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--gold1),var(--gold2))}
+
+/* el aviso rojo respira un poco mejor */
+.alert{border-radius:2px;box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
+
+/* estados deshabilitados coherentes en toda la app */
+button:disabled{filter:saturate(.5)}

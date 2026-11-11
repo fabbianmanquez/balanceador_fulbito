@@ -160,6 +160,34 @@
   textarea{min-height:160px;font-weight:400;line-height:1.55;resize:vertical}
   input:focus-visible,textarea:focus-visible{outline:3px solid #ffe870;outline-offset:0}
 
+  /* hoja de anotador: renglones que acompañan al texto */
+  .taWrap{position:relative}
+  textarea.lined{
+    line-height:28px;font-size:16px;font-weight:600;color:#1a2433;padding:8px 14px 8px 46px;min-height:336px;
+    background-color:#fffef9;background-attachment:local;background-repeat:no-repeat,repeat;
+    background-size:100% 100%,auto;background-position:0 0,0 8px;
+    background-image:
+      linear-gradient(90deg,transparent 0 36px,#e8a3a3 36px 37px,transparent 37px),
+      repeating-linear-gradient(180deg,transparent 0 27px,#c6d3e4 27px 28px)
+  }
+  textarea.lined::placeholder{color:#8a97a8;font-weight:400}
+
+  /* globo de validacion en vivo */
+  .pop{
+    position:absolute;right:12px;bottom:12px;max-width:calc(100% - 24px);z-index:2;
+    padding:7px 13px;border:2px solid #05101f;border-radius:3px;
+    font-size:13px;font-weight:700;letter-spacing:.2px;line-height:1.3;color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.55);
+    box-shadow:0 3px 10px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.3);
+    animation:popIn .2s cubic-bezier(.2,.9,.3,1.3)
+  }
+  .pop[hidden]{display:none}
+  .pop.inline{position:static;display:block;margin-top:6px;max-width:none;animation:none}
+  .pop b{color:#ffe870}
+  .pop.ok{background:linear-gradient(180deg,#58c13b,#2b7d1d)}
+  .pop.warn{background:linear-gradient(180deg,#e9a43a,#a8610b)}
+  .pop.bad{background:linear-gradient(180deg,#d4574d,#8a251e)}
+  @keyframes popIn{from{opacity:0;transform:translateY(8px) scale(.94)}to{opacity:1;transform:none}}
+
   .arrows{display:flex;gap:4px;margin-top:6px}
   .arrows button{
     flex:1;background:linear-gradient(180deg,#f2f5f8,#c6cdd7);border:1px solid #6b7686;
@@ -367,7 +395,12 @@
     .sbox p{font-size:24px;padding:9px 6px}
     .sbox p.sm{font-size:17px}
     input[type=text],textarea{font-size:17px;padding:11px 13px}
-    textarea{min-height:calc(100vh - 460px)}
+    textarea.lined{min-height:max(392px,calc(100vh - 460px));font-size:18px;line-height:32px;padding:10px 16px 10px 54px;
+      background-position:0 0,0 10px;
+      background-image:
+        linear-gradient(90deg,transparent 0 44px,#e8a3a3 44px 45px,transparent 45px),
+        repeating-linear-gradient(180deg,transparent 0 31px,#c6d3e4 31px 32px)}
+    .pop{font-size:15px;padding:9px 16px}
     .mbtn{font-size:18px;padding:15px 40px}
     .alert{font-size:15px;padding:10px 14px}
     .cmdbar{padding:14px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
@@ -502,6 +535,33 @@ function dupInfo(names){
 }
 function suggestName(base, taken){
   for(let i=2;;i++){ const s = base+' '+i; if(!taken.has(nameKey(s))){ taken.add(nameKey(s)); return s; } }
+}
+function listStatus(names, extra){
+  const n = names.length;
+  if(!n) return null;
+  const {dup, later} = dupInfo(names);
+  const plural = n===1 ? 'jugador' : 'jugadores';
+  if(dup.size){
+    const i = [...later][0];
+    return {kind:'bad', html:'<b>'+n+'</b> '+plural+' · nombre repetido: <b>'+esc(names[i].trim())+'</b>'};
+  }
+  if(n < 4) return {kind:'warn', html:'<b>'+n+'</b> '+plural+' · cargá al menos 4'};
+  const c = canchaFor(n);
+  if(c) return {kind:'ok', html:'<b>'+n+'</b> jugadores · <b>'+c.label+'</b> ✓'};
+  const lo = CANCHAS.filter(x=>x.n<n).pop(), hi = CANCHAS.find(x=>x.n>n);
+  const parts = [];
+  if(lo) parts.push(lo.label+': sobra'+(n-lo.n>1?'n':'')+' <b>'+(n-lo.n)+'</b>');
+  if(hi) parts.push(hi.label+': falta'+(hi.n-n>1?'n':'')+' <b>'+(hi.n-n)+'</b>');
+  return {kind:'warn', html:'<b>'+n+'</b> jugadores · '+parts.join(' · ')};
+}
+function setPop(el, st){
+  if(!st){ el.hidden = true; return; }
+  const was = el.dataset.kind;
+  el.hidden = false;
+  el.className = el.className.replace(/\b(ok|warn|bad)\b/g,'').trim() + ' ' + st.kind;
+  el.innerHTML = st.html;
+  if(was !== st.kind){ el.style.animation='none'; void el.offsetWidth; el.style.animation=''; }
+  el.dataset.kind = st.kind;
 }
 const canchaFor = n => CANCHAS.find(c => c.n === n) || null;
 
@@ -736,7 +796,8 @@ function renderImportar(st){
   st.className = 'stage single';
   st.innerHTML =
     '<div class="panel"><div class="phead">LISTA DE JUGADORES</div>'+
-      '<textarea id="rawIn" placeholder="Pegá la lista como venga: 1. Timo / 2 Fabi / 3-Juan / 10Gallo / o separados por coma">'+esc(S.raw)+'</textarea>'+
+      '<div class="taWrap"><textarea id="rawIn" class="lined" placeholder="Pegá la lista como venga: 1. Timo / 2 Fabi / 3-Juan / 10Gallo / o separados por coma">'+esc(S.raw)+'</textarea>'+
+        '<div class="pop" id="pop" role="status" aria-live="polite" hidden></div></div>'+
       '<div class="menu" style="margin-top:6px"><button class="mbtn" id="doParse">Leer la lista</button></div>'+
     '</div>'+ alertBox();
   $('doParse').addEventListener('click', ()=>{
@@ -745,6 +806,9 @@ function renderImportar(st){
     if(names.length < 4){ S.alert = 'Solo detecté <b>'+names.length+'</b> nombre(s)'; render(); return; }
     S.alert=''; S.draft=names; S.step='revisar'; render();
   });
+  const paintPop = () => setPop($('pop'), listStatus(parseList($('rawIn').value)));
+  $('rawIn').addEventListener('input', paintPop);
+  paintPop();
   setCmd([]);
   $('rawIn').focus();
 }
@@ -786,6 +850,7 @@ function renderRevisar(st){
     '</div></div>'+
     '<div class="panel"><div class="phead">AGREGAR</div>'+
       '<input type="text" id="addIn" maxlength="18" placeholder="Nombre y Enter" autocomplete="off">'+
+      '<div class="pop inline" id="pop" role="status" aria-live="polite" hidden></div>'+
       '<div class="sbox" style="margin-top:6px"><h4>MODALIDAD</h4><p class="sm">'+(c?c.label:'—')+'</p></div>'+
       '<div class="sbox"><h4>POR EQUIPO</h4><p>'+(c?c.n/2:'—')+'</p></div>'+
     '</div>'+ warn;
@@ -811,6 +876,15 @@ function renderRevisar(st){
   });
   st.querySelectorAll('[data-sug]').forEach(b=> b.addEventListener('click',()=>{ S.draft[+b.dataset.sug] = sug[+b.dataset.sug]; render(); }));
   st.querySelectorAll('[data-del]').forEach(b=> b.addEventListener('click',()=>{ S.draft.splice(+b.dataset.del,1); render(); }));
+  const paintPop = () => {
+    const v = $('addIn').value.trim();
+    if(!v){ setPop($('pop'), listStatus(S.draft)); return; }
+    if(S.draft.some(x=>nameKey(x)===nameKey(v)))
+      setPop($('pop'), {kind:'bad', html:'<b>'+esc(v)+'</b> ya está en la lista'});
+    else setPop($('pop'), listStatus(S.draft.concat(v)));
+  };
+  $('addIn').addEventListener('input', paintPop);
+  paintPop();
   $('addIn').addEventListener('keydown', e=>{
     if(e.key==='Enter' && e.target.value.trim()){ S.draft.push(e.target.value.trim()); render(); $('addIn').focus(); }
   });

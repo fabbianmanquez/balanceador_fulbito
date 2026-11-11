@@ -1,32 +1,12 @@
 <!DOCTYPE html>
 <!--
   ============================================================
-  FOTOS DE LAS TARJETAS DEL MENU PRINCIPAL
-
-  Opcion A (recomendada): archivos sueltos
-    Crea una carpeta "assets" al lado de este index.html y meté:
-      assets/armar-a-mano.jpg
-      assets/importar-lista.jpg
-    Se cargan solas. Si falta alguna, la tarjeta muestra el dibujo
-    SVG de reserva y no se rompe nada.
-
-  Opcion B: incrustar la imagen dentro del HTML (sin carpeta)
-    Convertí el archivo a base64 y pegá el resultado en el campo
-    "img" del arreglo SLIDES, mas abajo en el script:
-      img:'data:image/jpeg;base64,/9j/4AAQSkZJRg...'
-    Para generar el base64:
-      Mac / Linux:  base64 -i foto.jpg | pbcopy
-      Windows:      certutil -encodehex -f foto.jpg salida.txt 0x40000001
-      Sin consola:  cualquier conversor online de "image to base64"
-
-  Para cambiar los nombres de archivo, editá "img" en SLIDES.
-
   SONIDO DE LOS BOTONES
     La app trae sonidos sintetizados, sin archivos. Si preferis usar
     archivos propios, crea la carpeta y pone tres wav (o mp3/ogg):
       assets/sfx/move.wav      navegar por listas y flechas
       assets/sfx/confirm.wav   confirmar y avanzar
-      assets/sfx/back.wav      volver y menu principal
+      assets/sfx/back.wav      volver y nueva lista
     Se detectan solos. Si falta alguno, ese caso sigue sonando
     sintetizado. Para cambiar nombres o formato, edita SOUND_FILES
     en el script. OJO: la carga por fetch no funciona abriendo el
@@ -195,45 +175,6 @@
   .alert b{color:#ffe870}
 
 
-  /* ---- carrusel de la pantalla inicial ---- */
-  .carousel{position:relative;overflow:hidden;padding:2px}
-  .stage.single .carousel{
-    max-width:430px;margin:0 auto;
-    height:clamp(400px, calc(100vh - 150px), 660px)
-  }
-  .track{display:flex;align-items:stretch;height:100%;
-    transition:transform .34s cubic-bezier(.25,.85,.3,1);will-change:transform}
-  .track.dragging{transition:none}
-  .cslide{min-width:100%;flex:0 0 100%;padding:0 3px;display:flex}
-  .card{
-    display:flex;flex-direction:column;padding:0;cursor:pointer;overflow:hidden;width:100%;height:100%;
-    background:#0d1728;border:2px solid #05101f;border-radius:12px;
-    font-family:inherit;text-align:center;color:#fff;
-    box-shadow:0 7px 20px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.14)
-  }
-  .card:focus-visible{outline:3px solid #ffe870;outline-offset:2px}
-  .card .art{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;background:#0d1728}
-  .card .art svg,.card .art img{position:absolute;inset:0;width:100%;height:100%;display:block}
-  .card .art img{object-fit:cover;object-position:center 18%}
-  .card .band{flex:0 0 auto;padding:16px 18px 20px}
-  .card.blue .band{background:linear-gradient(180deg,#4784d3,#1c3d7c);color:#fff}
-  .card.gold .band{background:linear-gradient(180deg,#d8c295,#7d6537);color:#1b1508}
-  .card h3{margin:0 0 8px;font-size:17px;letter-spacing:1.6px;font-weight:700}
-  .card p{margin:0;font-size:12px;line-height:1.6;opacity:.92}
-
-  .cnav{
-    position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:34px;height:52px;cursor:pointer;
-    background:linear-gradient(180deg,rgba(90,107,128,.92),rgba(13,20,29,.92));
-    border:1px solid #05101f;border-radius:4px;color:#fff;font-size:18px;font-weight:900;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 2px 6px rgba(0,0,0,.5)
-  }
-  .cnav:hover{background:linear-gradient(180deg,#ffe870,#c99a08);color:#101820}
-  .cnav.prev{left:8px} .cnav.next{right:8px}
-  .cdots{display:flex;justify-content:center;gap:9px;padding:12px 4px 4px}
-  .cdots button{width:11px;height:11px;padding:0;border-radius:50%;cursor:pointer;
-    background:#5b6b80;border:1px solid #05101f;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
-  .cdots button.on{background:linear-gradient(180deg,#ffe870,#dfae15);transform:scale(1.25)}
-
   .snd{
     background:linear-gradient(180deg,#5a6b80,#141c26);color:#fff;border:1px solid #05101f;
     border-radius:3px;width:32px;height:26px;margin:auto 8px;cursor:pointer;font-size:13px;
@@ -335,7 +276,7 @@
     background:linear-gradient(180deg,var(--gold1),var(--gold2))}
 
   /* transiciones cortas: el cambio de estado ya no es un salto seco */
-  .row,.mbtn,.arrows button,.cmd,.card,.cnav,.snd,.cdots button,.del{
+  .row,.mbtn,.arrows button,.cmd,.snd,.del{
     transition:background .15s ease,border-color .15s ease,color .15s ease,
                box-shadow .15s ease,transform .1s ease}
 
@@ -348,10 +289,6 @@
   .row.sel::before{
     content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
     background:linear-gradient(180deg,var(--gold1),var(--gold2))}
-
-  /* la tarjeta reacciona al hover sin moverse de lugar */
-  .card:hover{box-shadow:0 9px 26px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.22)}
-  .card:hover .band{filter:brightness(1.08)}
 
   /* marcas de cancha: linea de mitad y circulo central */
   .pitch{
@@ -377,11 +314,8 @@
     .tag b,.count b{font-size:10px}
     .snd{width:28px;height:24px;margin:auto 5px}
     .stage{padding:9px;gap:8px}
-    .stage.single .carousel{height:clamp(340px,calc(100vh - 130px),560px)}
     .mbtn{font-size:14px;padding:10px 30px}
     .slidename{font-size:22px;padding:12px 8px}
-    .card h3{font-size:15px;letter-spacing:1.1px}
-    .card p{font-size:11px}
     .cmd{font-size:12px;padding:8px 12px 8px 7px}
     .list{max-height:44vh}
   }
@@ -395,7 +329,6 @@
     }
     .stage{flex:1 1 auto;align-content:center;padding:22px;gap:18px}
     .stage.single{max-width:760px;width:100%}
-    .stage.single .carousel{max-width:560px;height:clamp(460px,calc(100vh - 260px),760px)}
     .topbar{min-height:54px}
     .tag{padding:8px 28px}
     .tag b,.count b{font-size:15px}
@@ -463,12 +396,12 @@ const ARROW_COL = {1:'var(--a1)',2:'var(--a2)',3:'var(--a3)',4:'var(--a4)',5:'va
 const ARROW_ROT = {1:180,2:135,3:90,4:45,5:0};
 const ARROW_TXT = {1:'Hace lo que puede',2:'Irregular',3:'Regular',4:'Picante',5:'Sobrado'};
 
-const BACK = {cancha:'inicio', arqueros:'cancha', importar:'inicio', revisar:'importar', equipos:'carga'};
+const BACK = {revisar:'importar', equipos:'carga'};
 
 const S = {
-  step:'inicio', origin:'manual', canchaIdx:0, cancha:null,
+  step:'importar', cancha:null,
   players:[], sel:0, raw:'', draft:[], alert:'',
-  slideIdx:0, cands:[], candIdx:0, view:'lista', editing:false, share:false, copied:'', sound:true, slide:0
+  slideIdx:0, cands:[], candIdx:0, view:'lista', editing:false, share:false, copied:'', sound:true
 };
 
 const $ = id => document.getElementById(id);
@@ -667,8 +600,7 @@ const ic = (n, size) =>
 
 const CMD = {
   back:   {act:'back',        tone:'t-back',  icon:ic('back'),    label:'Volver atrás'},
-  home:   {act:'home',        tone:'t-home',  icon:ic('home'),    label:'Menú principal'},
-  cancha: {act:'okCancha',    tone:'t-go',    icon:ic('check'),   label:'Confirmar cancha'},
+  home:   {act:'home',        tone:'t-home',  icon:ic('home'),    label:'Nueva lista'},
   nivel:  {act:'startSlides', tone:'t-go',    icon:ic('levels'),  label:'Armar plantel'},
   plantel:{act:'finishSlides',tone:'t-go',    icon:ic('check'),   label:'Ir al plantel'},
   armar:  {act:'armar',       tone:'t-go',    icon:ic('ball'),    label:'Armar equipos'},
@@ -689,45 +621,11 @@ const alertBox = () => S.alert ? '<div class="alert">'+S.alert+'</div>' : '';
 
 function render(){
   const st = $('stage');
-  ({inicio:renderInicio, cancha:renderCancha, arqueros:renderArqueros, importar:renderImportar,
+  ({importar:renderImportar,
     revisar:renderRevisar, slides:renderSlides, carga:renderCarga, equipos:renderEquipos})[S.step](st);
 }
 
 // ---------- pantallas ----------
-const ART_MANO =
-  '<svg class="art" viewBox="0 0 220 112" preserveAspectRatio="none" aria-hidden="true">'+
-    '<defs><linearGradient id="gm" x1="0" y1="0" x2="0" y2="1">'+
-      '<stop offset="0" stop-color="#4e9c44"/><stop offset="1" stop-color="#2f6b2b"/></linearGradient></defs>'+
-    '<rect width="220" height="112" fill="url(#gm)"/>'+
-    '<g fill="none" stroke="rgba(255,255,255,.32)" stroke-width="2">'+
-      '<rect x="10" y="8" width="200" height="96"/><line x1="110" y1="8" x2="110" y2="104"/>'+
-      '<circle cx="110" cy="56" r="20"/><rect x="10" y="34" width="24" height="44"/>'+
-      '<rect x="186" y="34" width="24" height="44"/></g>'+
-    '<g>'+
-      '<circle cx="62" cy="40" r="9" fill="#2f5fae" stroke="#04101f" stroke-width="2"/>'+
-      '<circle cx="62" cy="74" r="9" fill="#2f5fae" stroke="#04101f" stroke-width="2"/>'+
-      '<circle cx="158" cy="40" r="9" fill="#b23a30" stroke="#04101f" stroke-width="2"/>'+
-      '<circle cx="158" cy="74" r="9" fill="#b23a30" stroke="#04101f" stroke-width="2"/>'+
-      '<circle cx="110" cy="56" r="7" fill="#f2f5f8" stroke="#04101f" stroke-width="2"/>'+
-    '</g></svg>';
-
-const ART_LISTA =
-  '<svg class="art" viewBox="0 0 220 112" preserveAspectRatio="none" aria-hidden="true">'+
-    '<defs><linearGradient id="gl" x1="0" y1="0" x2="0" y2="1">'+
-      '<stop offset="0" stop-color="#26456f"/><stop offset="1" stop-color="#101f38"/></linearGradient></defs>'+
-    '<rect width="220" height="112" fill="url(#gl)"/>'+
-    '<g fill="#e9edf2" stroke="#04101f" stroke-width="2">'+
-      '<rect x="34" y="14" width="118" height="76" rx="6"/></g>'+
-    '<path d="M46 90 L46 104 L64 90 Z" fill="#e9edf2" stroke="#04101f" stroke-width="2"/>'+
-    '<g fill="#8d99a8">'+
-      '<rect x="46" y="26" width="26" height="7"/><rect x="78" y="26" width="60" height="7"/>'+
-      '<rect x="46" y="42" width="26" height="7"/><rect x="78" y="42" width="48" height="7"/>'+
-      '<rect x="46" y="58" width="26" height="7"/><rect x="78" y="58" width="56" height="7"/>'+
-      '<rect x="46" y="74" width="26" height="7"/><rect x="78" y="74" width="40" height="7"/></g>'+
-    '<g stroke="#04101f" stroke-width="2">'+
-      '<circle cx="176" cy="40" r="14" fill="#d8c295"/><circle cx="176" cy="76" r="14" fill="#4784d3"/></g>'+
-  '</svg>';
-
 /* ---- sonido de interfaz -------------------------------------
    Sintetizado en vivo con Web Audio. No hay archivos de audio:
    'move'    blip corto y brillante  (~1500 Hz)
@@ -804,127 +702,9 @@ document.addEventListener('click', e=>{
   if(!b || b.disabled || b.id === 'sndBtn') return;
   const act = b.dataset.act;
   if(act === 'back' || act === 'home') beep('back');
-  else if(b.classList.contains('cnav') || b.parentElement && b.parentElement.classList.contains('cdots')) return;
-  else if(b.classList.contains('cmd') || b.classList.contains('mbtn') || b.classList.contains('card')) beep('confirm');
+  else if(b.classList.contains('cmd') || b.classList.contains('mbtn')) beep('confirm');
   else beep('move');
 }, true);
-
-const SLIDES = [
-  { go:'importar', cls:'gold', img:'assets/importar-lista.jpg', art:'ART_LISTA',
-    titulo:'IMPORTAR LISTA',
-    texto:'Pegá el mensaje del grupo y armá el plantel de una.' },
-  { go:'cancha',   cls:'blue', img:'assets/armar-a-mano.jpg', art:'ART_MANO',
-    titulo:'ARMAR A MANO',
-    texto:'Elegí la cancha y cargá los jugadores uno por uno con su nivel.' }
-];
-const ARTS = {ART_MANO: ()=>ART_MANO, ART_LISTA: ()=>ART_LISTA};
-
-function renderInicio(st){
-  head('MENÚ','Armador de equipos','');
-  st.className = 'stage single';
-  st.innerHTML =
-    '<div class="carousel">'+
-      '<button class="cnav prev" id="cprev" aria-label="Anterior">'+ic('chevL',20)+'</button>'+
-      '<button class="cnav next" id="cnext" aria-label="Siguiente">'+ic('chevR',20)+'</button>'+
-      '<div class="track" id="track">'+
-        SLIDES.map(sl =>
-          '<div class="cslide"><button class="card '+sl.cls+'" data-go="'+sl.go+'">'+
-            '<div class="art">'+ ARTS[sl.art]() +
-              '<img src="'+sl.img+'" alt="" onerror="this.style.display=\'none\'">'+
-            '</div>'+
-            '<div class="band"><h3>'+sl.titulo+'</h3><p>'+sl.texto+'</p></div>'+
-          '</button></div>').join('')+
-      '</div>'+
-    '</div>'+
-    '<div class="cdots">'+ SLIDES.map((_,i)=>
-      '<button class="'+(i===S.slide?'on':'')+'" data-dot="'+i+'" aria-label="Ir a la opción '+(i+1)+'"></button>').join('')+
-    '</div>';
-
-  const track = $('track');
-  const paint = () => {
-    track.style.transform = 'translateX(-'+(S.slide*100)+'%)';
-    st.querySelectorAll('[data-dot]').forEach((d,i)=> d.classList.toggle('on', i===S.slide));
-  };
-  const goTo = i => {
-    const n = Math.max(0, Math.min(SLIDES.length-1, i));
-    if(n !== S.slide){ S.slide = n; beep('move'); }
-    paint();
-  };
-  paint();
-
-  $('cprev').addEventListener('click', ()=> goTo(S.slide-1));
-  $('cnext').addEventListener('click', ()=> goTo(S.slide+1));
-  st.querySelectorAll('[data-dot]').forEach(d=> d.addEventListener('click', ()=> goTo(+d.dataset.dot)));
-
-  // arrastre con dedo o mouse
-  let x0=null, dx=0, w=1, moved=false;
-  const down = x => { x0=x; dx=0; moved=false; w=track.getBoundingClientRect().width||1; track.classList.add('dragging'); };
-  const move = x => {
-    if(x0===null) return;
-    dx = x - x0;
-    if(Math.abs(dx) > 8) moved = true;
-    track.style.transform = 'translateX(calc(-'+(S.slide*100)+'% + '+dx+'px))';
-  };
-  const up = () => {
-    if(x0===null) return;
-    track.classList.remove('dragging');
-    const umbral = Math.min(70, w*0.18);
-    if(dx <= -umbral) goTo(S.slide+1);
-    else if(dx >= umbral) goTo(S.slide-1);
-    else paint();
-    x0=null;
-  };
-  track.addEventListener('touchstart', e=> down(e.touches[0].clientX), {passive:true});
-  track.addEventListener('touchmove',  e=> move(e.touches[0].clientX), {passive:true});
-  track.addEventListener('touchend', up);
-  track.addEventListener('mousedown', e=>{ e.preventDefault(); down(e.clientX); });
-  window.addEventListener('mousemove', move2);
-  window.addEventListener('mouseup', up2);
-  function move2(e){ if(x0!==null) move(e.clientX); }
-  function up2(){ if(x0!==null) up(); }
-
-  st.querySelectorAll('[data-go]').forEach(b=> b.addEventListener('click', e=>{
-    if(moved){ e.preventDefault(); return; }   // no abrir si venias arrastrando
-    S.origin = b.dataset.go === 'importar' ? 'import' : 'manual';
-    S.alert=''; S.step=b.dataset.go; render();
-  }));
-
-  setCmd([]);
-}
-
-function renderCancha(st){
-  const c = CANCHAS[S.canchaIdx];
-  head('CANCHA','Selección de modalidad',(S.canchaIdx+1)+' / '+CANCHAS.length);
-  st.className = 'stage';
-  st.innerHTML =
-    '<div class="panel"><div class="phead">MODALIDAD</div><div class="menu">'+
-      CANCHAS.map((x,i)=>'<button class="mbtn'+(i===S.canchaIdx?' on':'')+'" data-i="'+i+'">'+esc(x.label)+'</button>').join('')+
-    '</div></div>'+
-    '<div class="panel"><div class="phead">DATOS</div>'+
-      '<div class="sbox"><h4>JUGADORES</h4><p>'+c.n+'</p></div>'+
-      '<div class="sbox"><h4>POR EQUIPO</h4><p>'+(c.n/2)+'</p></div>'+
-      '<div class="sbox"><h4>ARQUEROS FIJOS</h4><p class="sm">hasta '+MAX_GK+'</p></div>'+
-    '</div>';
-  st.querySelectorAll('[data-i]').forEach(b=> b.addEventListener('click',()=>{ S.canchaIdx=+b.dataset.i; render(); }));
-  setCmd(navBack([cmd('cancha')]));
-}
-
-function renderArqueros(st){
-  head('ARQUEROS', S.cancha.label, '');
-  st.className = 'stage single';
-  st.innerHTML =
-    '<div class="panel"><div class="phead">¿HAY ARQUEROS FIJOS?</div><div class="menu">'+
-      '<button class="mbtn" data-gk="0">No hay</button>'+
-      '<button class="mbtn" data-gk="1">Sí, 1 arquero</button>'+
-      '<button class="mbtn" data-gk="2">Sí, 2 arqueros</button>'+
-    '</div></div>';
-  st.querySelectorAll('[data-gk]').forEach(b=> b.addEventListener('click',()=>{
-    const g = +b.dataset.gk;
-    S.players = Array.from({length:S.cancha.n},(_,i)=>({name:'',arrow:3,isGK:i<g,set:true,label:i<g?'POR':'DEF'}));
-    S.editing=false; S.step='carga'; S.sel=0; render(); focusName();
-  }));
-  setCmd(navBack());
-}
 
 function renderImportar(st){
   head('IMPORTAR','Pegá el mensaje','');
@@ -940,7 +720,8 @@ function renderImportar(st){
     if(names.length < 4){ S.alert = 'Solo detecté <b>'+names.length+'</b> nombre(s)'; render(); return; }
     S.alert=''; S.draft=names; S.step='revisar'; render();
   });
-  setCmd(navBack());
+  setCmd([]);
+  $('rawIn').focus();
 }
 
 function renderRevisar(st){
@@ -1152,7 +933,7 @@ function renderEquipos(st){
 
 // ---------- acciones ----------
 const ACTIONS = {
-  home(){ S.step='inicio'; S.alert=''; render(); },
+  home(){ S.step='importar'; S.alert=''; S.raw=''; S.draft=[]; S.players=[]; render(); },
   back(){
     S.alert='';
     if(S.step==='slides'){
@@ -1163,15 +944,13 @@ const ACTIONS = {
     if(S.step==='carga'){
       const full = S.players.every(x=>x.name.trim());
       if(S.editing && full){ commitName(); S.editing=false; render(); return; }
-      if(S.origin==='import'){ S.step='slides'; S.slideIdx=S.players.length-1; }
-      else S.step='arqueros';
+      S.step='slides'; S.slideIdx=S.players.length-1;
       S.editing=false; render(); return;
     }
-    S.step = BACK[S.step] || 'inicio';
+    S.step = BACK[S.step] || 'importar';
     if(S.step==='carga') S.editing=false;
     render();
   },
-  okCancha(){ S.cancha = CANCHAS[S.canchaIdx]; S.step='arqueros'; render(); },
   startSlides(){
     if(dupInfo(S.draft).dup.size) return;
     S.cancha = canchaFor(S.draft.length);
@@ -1208,11 +987,7 @@ const ACTIONS = {
 };
 
 document.addEventListener('keydown', e=>{
-  if(e.key==='Escape' && S.step!=='inicio'){ ACTIONS.back(); return; }
-  if(S.step==='inicio' && (e.key==='ArrowLeft' || e.key==='ArrowRight')){
-    const n = S.slide + (e.key==='ArrowRight' ? 1 : -1);
-    if(n>=0 && n<SLIDES.length){ S.slide=n; beep('move'); render(); }
-  }
+  if(e.key==='Escape' && S.step!=='importar') ACTIONS.back();
 });
 
 $('sndBtn').innerHTML = ic('sndOn',15);

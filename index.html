@@ -105,6 +105,8 @@
   .row:hover{background:linear-gradient(180deg,#fbfcfd,#d6dde6)}
   .row.sel{background:linear-gradient(180deg,#fff,#eef1f5);border:2px solid #c0271d;
     box-shadow:0 0 0 1px #ffe870}
+  .row.gk{background:linear-gradient(180deg,#3d86ff,#0a44d8);border:1px solid #03246b;color:#fff;
+    text-shadow:0 1px 1px rgba(0,0,0,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
   .row.empty{color:#7b8797;font-weight:400;font-style:normal}
   .row:focus-visible{outline:3px solid #ffe870;outline-offset:1px}
   .row.dup{background:linear-gradient(180deg,#fde7e4,#f2b9b2);border:2px solid #c0271d}
@@ -318,6 +320,10 @@
   .pitch.oscuro .plate{
     background:linear-gradient(180deg,#3b434d,#10151b);color:#fff;
     border:1px solid rgba(255,255,255,.5)
+  }
+  .pitch .plate.gk{
+    background:linear-gradient(180deg,#3d86ff,#0a44d8);color:#fff;border:1px solid #03246b;
+    text-shadow:0 1px 1px rgba(0,0,0,.45)
   }
 
   /* ============================================================
@@ -982,7 +988,7 @@ function focusName(){ const i=$('nameIn'); if(i){ i.focus(); i.setSelectionRange
 function teamPanel(title,team,side){
   return '<div class="panel"><div class="phead '+side+'">'+esc(title)+'</div><div class="list">'+
     team.slice().sort((a,b)=>scoreOf(b)-scoreOf(a)).map(p=>
-      '<div class="row" style="cursor:default"><span class="badge'+(p.isGK?' por':'')+'">'+p.label+'</span>'+
+      '<div class="row'+(p.isGK?' gk':'')+'" style="cursor:default"><span class="badge'+(p.isGK?' por':'')+'">'+p.label+'</span>'+
       '<span class="nm">'+esc(p.name.trim()||'—')+'</span>'+(p.isGK?'':arrowSvg(scoreOf(p),15))+'</div>').join('')+
   '</div></div>';
 }
@@ -993,7 +999,7 @@ function pitchPanel(title,team,side){
   const line = arr => arr.length
     ? '<div class="pline">'+arr.map(p=>
         '<div class="pl"><i class="dot '+DOT[p.label]+'"></i>'+
-        '<span class="plate">'+esc(p.name.trim()||'—')+'</span></div>').join('')+'</div>'
+        '<span class="plate'+(p.isGK?' gk':'')+'">'+esc(p.name.trim()||'—')+'</span></div>').join('')+'</div>'
     : '';
   return '<div class="panel"><div class="thead '+side+'"><span class="sw"></span>'+esc(title)+'</div>'+
     '<div class="pitch '+side+'">'+line(lines.DEL)+line(lines.MED)+line(lines.DEF)+line(lines.POR)+'</div></div>';

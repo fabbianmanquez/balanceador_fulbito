@@ -5,14 +5,24 @@ import { teamDefs } from './screens/equipos.js';
 import { S } from './state.js';
 
 // ---------- imagen de la vista en cancha (para mandar por WhatsApp) ----------
+function loadImage(src){
+  return new Promise(resolve=>{
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
 export async function renderTeamsImage(){
   try{ await document.fonts.load('700 30px "Chakra Petch"'); }catch{}
+  const logo = await loadImage('assets/img/logo.svg');
   const FONT = '"Chakra Petch","Arial Narrow",Arial,sans-serif';
   const {teams,c} = teamsCurrent(), defs = teamDefs(teams.length);
   const cols = teams.length <= 3 ? 1 : 2;                    // pocas letras chicas al verla en el celular
   const colW = cols === 1 ? 1000 : 700, gap = 36, pad = 44, headH = 78;
   const pitchH = teams.length === 2 ? 700 : (cols === 1 ? 640 : 600);
-  const titleH = 130, footH = 70, rows = Math.ceil(teams.length/cols);
+  const titleH = 150, footH = 70, rows = Math.ceil(teams.length/cols);
   const W = pad*2 + cols*colW + (cols-1)*gap;
   const H = titleH + rows*(headH + 8 + pitchH) + (rows-1)*gap + footH + pad/2;
   const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
@@ -28,11 +38,13 @@ export async function renderTeamsImage(){
   g.fillStyle = '#fff'; g.font = '700 50px '+FONT; spaced('',3);
   g.shadowColor = 'rgba(0,0,0,.6)'; g.shadowBlur = 6; g.shadowOffsetY = 2;
   const title = (S.venue || S.cancha.label).toUpperCase();
-  let tfs = 50; while(tfs > 24 && g.measureText(title).width > W - pad*2){ tfs -= 2; g.font = '700 '+tfs+'px '+FONT; }
-  g.fillText(title, W/2, 62);
+  const logoH = 126, logoW = Math.round(logoH*0.83);          // el logo ocupa el costado izquierdo
+  let tfs = 50; while(tfs > 24 && g.measureText(title).width > W - (pad + logoW + 20)*2){ tfs -= 2; g.font = '700 '+tfs+'px '+FONT; }
+  g.fillText(title, W/2, 68);
+  if(logo) g.drawImage(logo, pad, 12, logoW, logoH);
   g.shadowColor = 'transparent';
   g.fillStyle = '#9fb3cf'; g.font = '600 26px '+FONT; spaced('',3);
-  g.fillText(S.venue ? S.cancha.label.toUpperCase() : (S.mode==='liga' ? 'FORMATO LIGA' : 'PARTIDO'), W/2, 104);
+  g.fillText(S.venue ? S.cancha.label.toUpperCase() : (S.mode==='liga' ? 'FORMATO LIGA' : 'PARTIDO'), W/2, 112);
 
   const ROLE = {DEL:['#ff9288','#c4241b'], MED:['#8be879','#2c9a1f'], DEF:['#8fb4ff','#2352b8'], POR:['#fff09a','#d7a60c']};
 
@@ -115,6 +127,6 @@ export async function renderTeamsImage(){
   });
 
   g.textAlign = 'center'; g.fillStyle = '#9fb3cf'; g.font = '600 24px '+FONT; spaced('',3);
-  g.fillText('EQUILIBRIO: '+(S.mode==='liga' ? balanceLiga(c.spread) : balanceWord(c.cost)), W/2, H - footH/2 - 6);
+  g.fillText('PICADITO APP  ·  EQUILIBRIO: '+(S.mode==='liga' ? balanceLiga(c.spread) : balanceWord(c.cost)), W/2, H - footH/2 - 6);
   return new Promise(res=> cv.toBlob(res,'image/png'));
 }

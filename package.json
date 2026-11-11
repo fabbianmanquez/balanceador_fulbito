@@ -1,7 +1,7 @@
 {
-  "name": "armador-de-equipos",
+  "name": "picadito-app",
   "version": "1.0.0",
-  "description": "Armador de equipos de fútbol: pegá la lista del grupo y obtené equipos parejos.",
+  "description": "Picadito App: pegá la lista del grupo y armá equipos de fútbol parejos.",
   "private": true,
   "type": "module",
   "scripts": {

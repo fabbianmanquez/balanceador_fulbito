@@ -47,9 +47,10 @@ export const SLIDES = [
 const ARTS = {ART_LISTA: artPitch, ART_LIGA: artTabla};
 
 export function renderInicio(st){
-  head('MENÚ','Armador de equipos','');
+  head('MENÚ','Elegí cómo armar los equipos','');
   st.className = 'stage single';
   st.innerHTML =
+    '<div class="brand"><img src="assets/img/logo.svg" alt="" width="46" height="55"><span>PICADITO APP</span></div>'+
     '<div class="carousel">'+
       '<button class="cnav prev" id="cprev" aria-label="Anterior">'+ic('chevL',20)+'</button>'+
       '<button class="cnav next" id="cnext" aria-label="Siguiente">'+ic('chevR',20)+'</button>'+

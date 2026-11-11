@@ -1,8 +1,10 @@
-# Armador de equipos
+# Picadito App
+
+<img src="assets/img/logo.svg" alt="Logo de Picadito App" width="96" align="right">
 
 Armá equipos de fútbol parejos a partir de la lista del grupo de WhatsApp: pegás los nombres, indicás el nivel de cada jugador y la app reparte los equipos para que queden balanceados.
 
-**Demo:** https://fabbianmanquez.github.io/balanceador_fulbito/
+**Demo:** https://fabbianmanquez.github.io/picadito-app/
 
 ## Funciones
 

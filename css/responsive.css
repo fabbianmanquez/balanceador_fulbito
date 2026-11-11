@@ -9,7 +9,9 @@
   .tag b,.count b{font-size:10px}
   .snd{width:28px;height:24px;margin:auto 5px}
   .stage{padding:9px;gap:8px}
-  .stage.single .carousel{height:clamp(340px,calc(100vh - 130px),560px)}
+  .stage.single .carousel{height:clamp(340px,calc(100vh - 200px),520px)}
+  .brand img{height:42px}
+  .brand span{font-size:20px}
   .card h3{font-size:15px;letter-spacing:1.1px}
   .card p{font-size:11px}
   .mbtn{font-size:14px;padding:10px 30px}
@@ -31,7 +33,7 @@
   }
   .stage{flex:1 1 auto;align-content:center;padding:22px;gap:18px}
   .stage.single{max-width:760px;width:100%}
-  .stage.single .carousel{max-width:560px;height:clamp(460px,calc(100vh - 260px),760px)}
+  .stage.single .carousel{max-width:560px;height:clamp(440px,calc(100vh - 360px),680px)}
   .topbar{min-height:54px}
   .tag{padding:8px 28px}
   .tag b,.count b{font-size:15px}

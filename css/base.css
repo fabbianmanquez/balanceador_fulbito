@@ -37,6 +37,8 @@ body{
 }
 .tag[hidden]{display:none}
 .tag b{transform:skewX(16deg);font-size:12px;font-style:italic;letter-spacing:.6px;text-shadow:1px 1px 0 #05101f}
+.brand-mark{align-self:center;height:31px;width:auto;margin:0 2px 0 12px;flex:0 0 auto;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.45))}
 .ttl{
   flex:1;display:flex;align-items:center;justify-content:center;
   font-size:16px;font-weight:700;font-style:italic;letter-spacing:1.2px;color:#131c26;

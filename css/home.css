@@ -1,10 +1,15 @@
 /* Menú de inicio: carrusel y dibujos de las tarjetas */
 
+/* ---- marca en el menu ---- */
+.brand{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 auto 4px}
+.brand img{height:55px;width:auto;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}
+.brand span{font-size:26px;font-weight:700;font-style:italic;letter-spacing:.14em;color:#fff;text-shadow:2px 2px 0 #05101f}
+
 /* ---- carrusel de la pantalla inicial ---- */
 .carousel{position:relative;overflow:hidden;padding:2px}
 .stage.single .carousel{
   max-width:430px;margin:0 auto;
-  height:clamp(400px, calc(100vh - 150px), 660px)
+  height:clamp(400px, calc(100vh - 230px), 600px)
 }
 .track{display:flex;align-items:stretch;height:100%;
   transition:transform .34s cubic-bezier(.25,.85,.3,1);will-change:transform}

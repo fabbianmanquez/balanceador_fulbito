@@ -1,6 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#0b1e3f"/>
-  <circle cx="32" cy="32" r="21" fill="#eef1f5" stroke="#05101f" stroke-width="3"/>
-  <path d="M32 20 L43 28 L39 41 L25 41 L21 28 Z" fill="#101820"/>
-  <path d="M32 20v-4M21 28l-6-2M43 28l6-2M25 41l-3 6M39 41l3 6" stroke="#101820" stroke-width="3" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="120" viewBox="0 0 100 120">
+  <defs>
+    <clipPath id="escudo">
+      <path d="M5 15 L30 5 Q50 15 70 5 L95 15 L95 62 Q95 98 50 115 Q5 98 5 62 Z"/>
+    </clipPath>
+  </defs>
+  <path d="M5 15 L30 5 Q50 15 70 5 L95 15 L95 62 Q95 98 50 115 Q5 98 5 62 Z" fill="#ffffff"/>
+  <g clip-path="url(#escudo)">
+    <rect x="37" y="0" width="26" height="120" fill="#0b3fbf"/>
+  </g>
+  <g fill="none" stroke="#0b3fbf" stroke-width="7" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M15 72 V36 H24 Q31 36 31 45 Q31 54 24 54 H15"/>
+    <path d="M66 72 L78 36 L90 72 M70.5 61 H85.5"/>
+  </g>
+  <circle cx="50" cy="58" r="11" fill="#ffffff" stroke="#05154d" stroke-width="2"/>
+  <path d="M50 51.5 L56 56 L53.8 63 H46.2 L44 56 Z" fill="#05154d"/>
+  <path d="M50 51.5 V47.2 M56 56 L60.2 54.6 M53.8 63 L56.6 67 M46.2 63 L43.4 67 M44 56 L39.8 54.6" stroke="#05154d" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M5 15 L30 5 Q50 15 70 5 L95 15 L95 62 Q95 98 50 115 Q5 98 5 62 Z" fill="none" stroke="#0b3fbf" stroke-width="5" stroke-linejoin="round"/>
 </svg>

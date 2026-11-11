@@ -1,7 +1,7 @@
 /* Constantes y parámetros del algoritmo. */
 
 /* ============================================================
-   ARMADOR DE EQUIPOS
+   PICADITO APP
    Escala interna (nunca visible en pantalla):
      abajo=1 | diagonal abajo=2 | recta=3 | diagonal arriba=4 | arriba=5
      arquero fijo (POR) = 3 y su flecha no se aplica

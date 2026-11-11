@@ -59,6 +59,7 @@
     display:flex;align-items:center;padding:6px 18px;transform:skewX(-16deg);margin-left:-8px;
     border-right:2px solid #05101f;
   }
+  .tag[hidden]{display:none}
   .tag b{transform:skewX(16deg);font-size:12px;font-style:italic;letter-spacing:.6px;text-shadow:1px 1px 0 #05101f}
   .ttl{
     flex:1;display:flex;align-items:center;justify-content:center;
@@ -563,6 +564,7 @@ const balanceWord = c => c<=1 ? 'MUY PAREJO' : c<=4 ? 'PAREJO' : c<=8 ? 'ACEPTAB
 // ---------- chrome ----------
 function head(tag,title,count){
   $('tag').textContent = tag;
+  $('tag').parentElement.hidden = !tag;
   $('title').textContent = title;
   $('count').innerHTML = count || '&nbsp;';
 }
@@ -707,7 +709,7 @@ document.addEventListener('click', e=>{
 }, true);
 
 function renderImportar(st){
-  head('IMPORTAR','Pegá el mensaje','');
+  head('','Pegá el mensaje','');
   st.className = 'stage single';
   st.innerHTML =
     '<div class="panel"><div class="phead">LISTA DE JUGADORES</div>'+

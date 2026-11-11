@@ -23,5 +23,5 @@ export const CANCHAS = [
 ];
 export const ARROW_COL = {1:'var(--a1)',2:'var(--a2)',3:'var(--a3)',4:'var(--a4)',5:'var(--a5)',7:'#a875f0'};
 export const ARROW_ROT = {1:180,2:135,3:90,4:45,5:0};
-export const ARROW_TXT = {1:'Hace lo que puede',2:'Irregular',3:'Regular',4:'Picante',5:'Sobrado',6:'Lesionado',7:'Random'};
-export const LEVELS = [1,2,3,4,5,6,7];   // 6 = Lesionado (al azar entre Regular, Irregular y Hace lo que puede), 7 = Random (al azar entre Picante y Hace lo que puede)
+export const ARROW_TXT = {1:'Flojo',2:'Irregular',3:'Regular',4:'Muy bueno',5:'Crack',6:'Lesionado',7:'Random'};
+export const LEVELS = [1,2,3,4,5,6,7];   // 6 = Lesionado (al azar entre Regular, Irregular y Flojo), 7 = Random (al azar entre Muy bueno y Flojo)

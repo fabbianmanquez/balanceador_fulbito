@@ -34,8 +34,8 @@ export function nCk(n,k){ let r=1; for(let i=1;i<=k;i++) r = r*(n-k+i)/i; return
 
 export function buildCandidates(){
   S.players.forEach(p=>{                                           // se sortea el puntaje de Lesionado y Random
-    if(p.arrow===6) p.rv = 1 + Math.floor(Math.random()*3);        // 1 a 3: Hace lo que puede, Irregular o Regular
-    else if(p.arrow===7) p.rv = 1 + Math.floor(Math.random()*4);   // 1 a 4: de Hace lo que puede a Picante
+    if(p.arrow===6) p.rv = 1 + Math.floor(Math.random()*3);        // 1 a 3: Flojo, Irregular o Regular
+    else if(p.arrow===7) p.rv = 1 + Math.floor(Math.random()*4);   // 1 a 4: de Flojo a Muy bueno
   });
   if(S.mode==='liga'){ buildLiga(); applyLabels(); return; }
   const P = S.players, n = P.length;

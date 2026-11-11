@@ -20,7 +20,7 @@ function revisar(tag, esperados){
 }
 
 describe('puntajes', () => {
-  it('Lesionado sortea entre Hace lo que puede, Irregular y Regular (1 a 3)', () => {
+  it('Lesionado sortea entre Flojo, Irregular y Regular (1 a 3)', () => {
     const visto = new Set();
     for(let i = 0; i < 300; i++){
       setup({ players: [{ name: 'A', arrow: 6, isGK: false, set: true, label: 'DEF' }, ...makePlayers(9)] });
@@ -30,7 +30,7 @@ describe('puntajes', () => {
     assert.deepEqual([...visto].sort(), [1, 2, 3]);
   });
 
-  it('Random sortea de Hace lo que puede a Picante (1 a 4)', () => {
+  it('Random sortea de Flojo a Muy bueno (1 a 4)', () => {
     const visto = new Set();
     for(let i = 0; i < 400; i++){
       setup({ players: [{ name: 'A', arrow: 7, isGK: false, set: true, label: 'DEF' }, ...makePlayers(9)] });

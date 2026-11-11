@@ -19,11 +19,11 @@ Armá equipos de fútbol parejos a partir de la lista del grupo de WhatsApp: peg
 
 | Nivel | Puntos |
 | --- | --- |
-| Sobrado | 5 |
-| Picante | 4 |
+| Crack | 5 |
+| Muy bueno | 4 |
 | Regular | 3 |
 | Irregular | 2 |
-| Hace lo que puede | 1 |
+| Flojo | 1 |
 | Arquero fijo (POR) | 3 |
 | Lesionado | al azar entre 1 y 3 |
 | Random | al azar entre 1 y 4 |

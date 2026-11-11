@@ -70,7 +70,7 @@ const CMD = {
   vista:  {act:'toggleView',  tone:'t-alt',   icon:ic('swap'),    label:'Cambiar vista'},
   rand:   {act:'reroll',      tone:'t-rand',  icon:ic('shuffle'), label:'Volver a mezclar equipos'},
   share:  {act:'toggleShare', tone:'t-share', icon:ic('chat'),    label:'Compartir por WhatsApp', next:true},
-  img:    {act:'sendImage',   tone:'t-share', icon:ic('image'),   label:'Enviar imagen por WhatsApp'},
+  img:    {act:'sendImage',   tone:'t-img',   icon:ic('image'),   label:'Enviar imagen por WhatsApp'},
   copiar: {act:'copyShare',   tone:'t-share', icon:ic('copy'),    label:'Copiar texto'}
 };
 export const cmd = (key, over) => Object.assign({}, CMD[key], over||{});

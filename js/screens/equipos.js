@@ -51,7 +51,7 @@ export function renderEquipos(st){
     ? '<div class="panel" style="grid-column:1/-1"><div class="phead">TEXTO PARA WHATSAPP</div>'+
         '<textarea id="shareTxt" readonly style="min-height:190px">'+esc(shareText())+'</textarea>'+
         '<div class="menu" style="margin-top:6px"><button class="mbtn" id="copyBtn">Copiar texto</button>'+
-          (S.view==='cancha' ? '<button class="mbtn" id="imgBtn">Enviar imagen por WhatsApp</button>' : '')+'</div>'+
+          (S.view==='cancha' ? '<button class="mbtn img" id="imgBtn">Enviar imagen por WhatsApp</button>' : '')+'</div>'+
         (S.copied ? '<div class="sbox" style="margin-top:6px"><h4>ESTADO</h4><p class="sm">'+esc(S.copied)+'</p></div>' : '')+
       '</div>'
     : '';

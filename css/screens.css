@@ -79,6 +79,10 @@
 .t-alt  {--acc:#f7b45c; --acc2:#a35d0c}
 .t-rand {--acc:#6fc4ef; --acc2:#155e93}
 .t-share{--acc:#5df08c; --acc2:#0f8a3d}
+.t-img  {--acc:#c4a8ff; --acc2:#6a45c8}
+.cmd.t-img{background:linear-gradient(180deg,#8f6fe8,#5a38b8 52%,#3a2287);border-color:#1b0f4a}
+.mbtn.img{background:linear-gradient(180deg,#c4a8ff,#7a55d6);border-color:#3b2380;color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.45)}
+.mbtn.img:hover:not(:disabled){background:linear-gradient(180deg,#d6c2ff,#8a66e6);border-color:#3b2380}
 .t-edit {--acc:#ffe870; --acc2:#b98c05}
 .t-del  {--acc:#f2938a; --acc2:#8c2119}
 .cmd .k svg,.snd svg,.cnav svg{display:block;margin:auto}

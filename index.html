@@ -126,6 +126,12 @@
     box-shadow:0 0 0 1px #ffe870}
   .row.empty{color:#7b8797;font-weight:400;font-style:normal}
   .row:focus-visible{outline:3px solid #ffe870;outline-offset:1px}
+  .row.dup{background:linear-gradient(180deg,#fde7e4,#f2b9b2);border:2px solid #c0271d}
+  .badge.rep{background:linear-gradient(180deg,var(--red1),var(--red2));border:1px solid #4d0f0b}
+  .row .sug{font-family:inherit;font-size:12px;font-weight:700;font-style:italic;cursor:pointer;
+    background:linear-gradient(180deg,var(--gold1),var(--gold2));color:#2a2100;border:1px solid var(--goldbd);
+    border-radius:2px;padding:3px 8px;flex:0 0 auto;white-space:nowrap}
+  .row .sug:hover{filter:brightness(1.08)}
   .row .del{background:linear-gradient(180deg,#d0554c,#8c241d);color:#fff;border:1px solid #4d0f0b;
     border-radius:2px;font-weight:900;width:22px;height:22px;cursor:pointer;flex:0 0 auto;line-height:1}
 
@@ -522,9 +528,21 @@ function parseList(text){
     .flatMap(items)
     .filter(w => w.length >= 2 && w.length <= 24);
 
-  const seen = new Set(), out = [];
-  tokens.forEach(x => { const k = x.toLowerCase(); if(!seen.has(k)){ seen.add(k); out.push(x); } });
-  return out;
+  return tokens;
+}
+
+// Nombres repetidos: invalidan la lista hasta que se cambien.
+const nameKey = s => s.trim().toLowerCase();
+function dupInfo(names){
+  const first = new Set(), dup = new Set(), later = new Set();
+  names.forEach((nm,i)=>{
+    const k = nameKey(nm);
+    if(first.has(k)){ dup.add(k); later.add(i); } else first.add(k);
+  });
+  return {dup, later};
+}
+function suggestName(base, taken){
+  for(let i=2;;i++){ const s = base+' '+i; if(!taken.has(nameKey(s))){ taken.add(nameKey(s)); return s; } }
 }
 const canchaFor = n => CANCHAS.find(c => c.n === n) || null;
 
@@ -927,27 +945,46 @@ function renderRevisar(st){
   const n = S.draft.length, c = canchaFor(n);
   head('REVISIÓN', c ? c.label : 'Ajustá la lista', n + ' NOMBRES');
   st.className = 'stage';
+  const {dup, later} = dupInfo(S.draft);
+  const taken = new Set(S.draft.map(nameKey));
+  const sug = {};
+  S.draft.forEach((nm,i)=>{ if(later.has(i)) sug[i] = suggestName(nm, taken); });
   let warn = '';
+  const warned = new Set();
+  [...later].forEach(i=>{
+    const k = nameKey(S.draft[i]);
+    if(warned.has(k)) return;
+    warned.add(k);
+    warn += '<div class="alert">Nombre repetido: <b>'+esc(S.draft[i].trim())+'</b>. No se puede armar con dos iguales. '+
+      'Cambiá uno, por ejemplo por <b>'+esc(sug[i])+'</b></div>';
+  });
   if(!c){
     const near = CANCHAS.reduce((a,b)=> Math.abs(b.n-n) < Math.abs(a.n-n) ? b : a);
     const d = n - near.n;
-    warn = '<div class="alert">'+near.label+': '+(d>0 ? 'sobra'+(d>1?'n':'')+' <b>'+d+'</b>' : 'falta'+(d<-1?'n':'')+' <b>'+(-d)+'</b>')+'</div>';
+    warn += '<div class="alert">'+near.label+': '+(d>0 ? 'sobra'+(d>1?'n':'')+' <b>'+d+'</b>' : 'falta'+(d<-1?'n':'')+' <b>'+(-d)+'</b>')+'</div>';
   }
   st.innerHTML =
     '<div class="panel"><div class="phead">NOMBRES DETECTADOS</div><div class="list">'+
-      S.draft.map((nm,i)=>'<div class="row" style="cursor:default">'+
-        '<span class="nm">'+esc(nm)+'</span><button class="del" data-del="'+i+'" aria-label="Quitar">×</button></div>').join('')+
+      S.draft.map((nm,i)=>{
+        const isDup = dup.has(nameKey(nm));
+        return '<div class="row'+(isDup?' dup':'')+'" style="cursor:default">'+
+        '<span class="nm">'+esc(nm)+'</span>'+
+        (isDup ? '<span class="badge rep">REPETIDO</span>' : '')+
+        (later.has(i) ? '<button class="sug" data-sug="'+i+'">Usar '+esc(sug[i])+'</button>' : '')+
+        '<button class="del" data-del="'+i+'" aria-label="Quitar">×</button></div>';
+      }).join('')+
     '</div></div>'+
     '<div class="panel"><div class="phead">AGREGAR</div>'+
       '<input type="text" id="addIn" maxlength="18" placeholder="Nombre y Enter" autocomplete="off">'+
       '<div class="sbox" style="margin-top:6px"><h4>MODALIDAD</h4><p class="sm">'+(c?c.label:'—')+'</p></div>'+
       '<div class="sbox"><h4>POR EQUIPO</h4><p>'+(c?c.n/2:'—')+'</p></div>'+
     '</div>'+ warn;
+  st.querySelectorAll('[data-sug]').forEach(b=> b.addEventListener('click',()=>{ S.draft[+b.dataset.sug] = sug[+b.dataset.sug]; render(); }));
   st.querySelectorAll('[data-del]').forEach(b=> b.addEventListener('click',()=>{ S.draft.splice(+b.dataset.del,1); render(); }));
   $('addIn').addEventListener('keydown', e=>{
     if(e.key==='Enter' && e.target.value.trim()){ S.draft.push(e.target.value.trim()); render(); $('addIn').focus(); }
   });
-  setCmd(navBack([cmd('nivel',{off:!c})]));
+  setCmd(navBack([cmd('nivel',{off:!c || dup.size>0})]));
 }
 
 function renderSlides(st){
@@ -1112,6 +1149,7 @@ const ACTIONS = {
   },
   okCancha(){ S.cancha = CANCHAS[S.canchaIdx]; S.step='arqueros'; render(); },
   startSlides(){
+    if(dupInfo(S.draft).dup.size) return;
     S.cancha = canchaFor(S.draft.length);
     S.players = S.draft.map(nm=>({name:nm, arrow:3, isGK:false, set:false, label:'DEF'}));
     S.slideIdx = 0; S.step='slides'; render();

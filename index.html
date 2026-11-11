@@ -464,7 +464,7 @@ const BACK = {revisar:'importar', equipos:'carga'};
 
 const S = {
   step:'importar', cancha:null,
-  players:[], sel:0, raw:'', draft:[], alert:'',
+  players:[], sel:0, raw:'', draft:[], venue:'', alert:'',
   slideIdx:0, cands:[], candIdx:0, view:'lista', editing:false, share:false, copied:'', sound:true
 };
 
@@ -488,12 +488,26 @@ const TIME_RE = /\b(?:[01]?\d|2[0-3])[:.][0-5]\d\b|\b(?:[01]?\d|2[0-3])\s*(?:hs|
 const DATE_RE = /\b\d{1,2}[\/\-]\d{1,2}(?:[\/\-]\d{2,4})?\b/;
 const isMeta = s => META_KW.test(s) || TIME_RE.test(s) || DATE_RE.test(s) || /\$\s*\d/.test(s);
 
-function parseList(text){
-  let t = String(text).replace(/\r/g,'').replace(/[*_`~]/g,'');   // negritas de whatsapp
+// Texto de cancha/hora que viene en la lista: se recuerda para el mensaje de WhatsApp.
+function cleanInfo(x){
+  const v = x.replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,'')
+    .replace(/\$\s*\d[\d.,]*/g,'')                               // el precio no se comparte
+    .replace(/\s+/g,' ').replace(/^[\s\-–—:·•|,;]+|[\s\-–—:·•|,;]+$/g,'');
+  if(!/\p{L}/u.test(v) || v.length < 3 || /^(cancha|campo|complejo|predio|lugar|horario|fecha)$/i.test(v)) return '';
+  return v.slice(0,60);
+}
 
-  // Linea con cancha/hora/fecha => se omite entera. Si trae separadores (lista en
-  // horizontal), se conserva y se descartan solo los items de datos.
-  t = t.split('\n').filter(l => !isMeta(l) || /[,;•|]/.test(l)).join('\n');
+function parseAll(text){
+  let t = String(text).replace(/\r/g,'').replace(/[*_`~]/g,'');   // negritas de whatsapp
+  const info = [];
+  const keep = x => { const v = cleanInfo(x); if(v && !info.includes(v)) info.push(v); };
+
+  // Linea con cancha/hora/fecha => no es jugador: se omite entera y se recuerda como dato del
+  // partido. Si trae separadores (lista en horizontal), se conserva y se descartan solo los items de datos.
+  t = t.split('\n').filter(l => {
+    if(!isMeta(l) || /[,;•|]/.test(l)) return true;
+    keep(l); return false;
+  }).join('\n');
 
   // Toda numeracion ("1. Timo", "1 Timo", "1-Timo", "10Gallo") pasa a ser un corte de item.
   const multi = /[\n,;]/.test(t);
@@ -523,12 +537,13 @@ function parseList(text){
   };
 
   const tokens = t.split(/[\n\t,;•·|\/]+|\s[-–—]\s/)
-    .filter(seg => !isMeta(seg))
+    .filter(seg => { if(!isMeta(seg)) return true; keep(seg); return false; })
     .flatMap(items)
     .filter(w => w.length >= 2 && w.length <= 24);
 
-  return tokens;
+  return {names:tokens, info:info.join(' · ')};
 }
+const parseList = text => parseAll(text).names;
 
 // Nombres repetidos: invalidan la lista hasta que se cambien.
 const nameKey = s => s.trim().toLowerCase();
@@ -809,9 +824,9 @@ function renderImportar(st){
     '</div>'+ alertBox();
   $('doParse').addEventListener('click', ()=>{
     S.raw = $('rawIn').value;
-    const names = parseList(S.raw);
+    const {names, info} = parseAll(S.raw);
     if(names.length < 4){ S.alert = 'Solo detecté <b>'+names.length+'</b> nombre(s)'; render(); return; }
-    S.alert=''; S.draft=names; S.step='revisar'; render();
+    S.alert=''; S.draft=names; S.venue=info; S.step='revisar'; render();
   });
   const paintPop = () => setPop($('pop'), listStatus(parseList($('rawIn').value)));
   $('rawIn').addEventListener('input', paintPop);
@@ -858,6 +873,7 @@ function renderRevisar(st){
     '<div class="panel"><div class="phead">AGREGAR</div>'+
       '<input type="text" id="addIn" maxlength="18" placeholder="Nombre y Enter" autocomplete="off">'+
       '<div class="pop inline" id="pop" role="status" aria-live="polite" hidden></div>'+
+      (S.venue ? '<div class="sbox" style="margin-top:6px"><h4>CANCHA Y HORA</h4><p class="sm">'+esc(S.venue)+'</p></div>' : '')+
       '<div class="sbox" style="margin-top:6px"><h4>MODALIDAD</h4><p class="sm">'+(c?c.label:'—')+'</p></div>'+
       '<div class="sbox"><h4>POR EQUIPO</h4><p>'+(c?c.n/2:'—')+'</p></div>'+
     '</div>'+ warn;
@@ -1011,7 +1027,7 @@ function shareText(){
   const fmt = t => t.slice()
     .sort((a,b)=> (ORD[a.label]-ORD[b.label]) || a.name.localeCompare(b.name))
     .map(p => p.label + '  ' + (p.name.trim() || '—')).join('\n');
-  return '⚽ ' + S.cancha.label + '\n\n' +
+  return '⚽ ' + (S.venue || S.cancha.label) + '\n\n' +
          '⚪ EQUIPO CLARO\n' + fmt(A) + '\n\n' +
          '⚫ EQUIPO OSCURO\n' + fmt(B);
 }
@@ -1041,7 +1057,7 @@ function renderEquipos(st){
 
 // ---------- acciones ----------
 const ACTIONS = {
-  home(){ S.step='importar'; S.alert=''; S.raw=''; S.draft=[]; S.players=[]; render(); },
+  home(){ S.step='importar'; S.alert=''; S.raw=''; S.draft=[]; S.players=[]; S.venue=''; render(); },
   back(){
     S.alert='';
     if(S.step==='slides'){

@@ -43,3 +43,8 @@ export const ic = (n, size) =>
   '<svg viewBox="0 0 24 24" width="'+(size||15)+'" height="'+(size||15)+'" fill="none" '+
   'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" '+
   'aria-hidden="true">'+IC[n]+'</svg>';
+
+// Remera minimalista para identificar al equipo (claro / oscuro) en la cancha
+export const JERSEY_PATH = 'M8 3 3 6.5 5 10 7 9v12h10V9l2 1 2-3.5L16 3c-.5 1.5-2.2 2.3-4 2.3S8.5 4.5 8 3Z';
+export const jerseySvg = side =>
+  '<svg class="jersey '+side+'" viewBox="0 0 24 24" aria-hidden="true"><path d="'+JERSEY_PATH+'" stroke-linejoin="round"/></svg>';

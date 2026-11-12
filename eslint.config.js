@@ -8,7 +8,7 @@ export default [
         window: 'readonly', document: 'readonly', navigator: 'readonly', fetch: 'readonly',
         performance: 'readonly', setTimeout: 'readonly', setInterval: 'readonly', URL: 'readonly',
         File: 'readonly', ClipboardItem: 'readonly', PointerEvent: 'readonly', AudioContext: 'readonly',
-        webkitAudioContext: 'readonly', console: 'readonly', confirm: 'readonly', Image: 'readonly'
+        webkitAudioContext: 'readonly', console: 'readonly', confirm: 'readonly', Image: 'readonly', Path2D: 'readonly'
       }
     },
     rules: {

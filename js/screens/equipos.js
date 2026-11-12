@@ -1,5 +1,5 @@
 import { balanceLiga, balanceWord, teamsCurrent } from '../balance.js';
-import { levelSvg } from '../icons.js';
+import { jerseySvg, levelSvg } from '../icons.js';
 import { ACTIONS } from '../router.js';
 import { scoreOf } from '../scoring.js';
 import { S } from '../state.js';
@@ -28,8 +28,8 @@ function pitchPanel(title,team,side){
         '<div class="pl"><i class="dot '+DOT[p.label]+'"></i>'+
         '<span class="plate'+(p.isGK?' gk':'')+'">'+esc(p.name.trim()||'—')+'</span></div>').join('')+'</div>'
     : '';
-  return '<div class="panel"><div class="thead '+side+'"><span class="sw"></span>'+esc(title)+'</div>'+
-    '<div class="pitch '+side+'">'+line(lines.DEL)+line(lines.MED)+line(lines.DEF)+line(lines.POR)+'</div></div>';
+  return '<div class="panel"><div class="thead '+side+'">'+esc(title)+'</div>'+
+    '<div class="pitch '+side+'">'+(side==='num' ? '' : jerseySvg(side))+line(lines.DEL)+line(lines.MED)+line(lines.DEF)+line(lines.POR)+'</div></div>';
 }
 
 const ORD = {POR:0, DEF:1, MED:2, DEL:3};

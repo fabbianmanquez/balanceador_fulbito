@@ -34,6 +34,7 @@
   .list{max-height:44vh}
   .thead{font-size:12px;letter-spacing:1.2px;padding:7px 10px}
   .pitch{gap:14px;padding:20px 2px 12px}
+  .jersey{top:6px;left:8px;width:30px;height:30px}
   .pl{max-width:86px}
   .plate{font-size:10px;padding:3px 5px;letter-spacing:0}
 }

@@ -1,5 +1,6 @@
 /* Imagen de la vista en cancha para compartir. */
 
+import { JERSEY_PATH } from './icons.js';
 import { balanceLiga, balanceWord, teamsCurrent } from './balance.js';
 import { teamDefs } from './screens/equipos.js';
 import { S } from './state.js';
@@ -57,13 +58,7 @@ export async function renderTeamsImage(){
     g.fillStyle = lin(0,y,0,y+headH,[[0,'#2b3138'],[1,'#0b0f14']]); g.fillRect(x,y,colW,headH);
     g.lineWidth = 3; g.strokeStyle = '#05101f'; g.strokeRect(x,y,colW,headH);
     g.lineWidth = 1.5; g.strokeStyle = 'rgba(255,255,255,.35)'; g.strokeRect(x+3,y+3,colW-6,headH-6);
-    let tx = x + 28;
-    if(side !== 'num'){
-      const sw = g.createRadialGradient(tx+10,y+headH/2-6,2,tx+14,y+headH/2,18);
-      if(side==='claro'){ sw.addColorStop(0,'#fff'); sw.addColorStop(1,'#c3cbd4'); } else { sw.addColorStop(0,'#56616d'); sw.addColorStop(1,'#090c10'); }
-      g.beginPath(); g.arc(tx+16, y+headH/2, 17, 0, Math.PI*2); g.fillStyle = sw; g.fill();
-      g.lineWidth = 3; g.strokeStyle = '#fff'; g.stroke(); tx += 52;
-    }
+    const tx = x + 28;
     g.textAlign = 'left'; g.fillStyle = '#fff'; g.font = '700 32px '+FONT; spaced('',4);
     g.fillText(defs[ti].title, tx, y+headH/2+2);
     spaced('',0);
@@ -83,6 +78,16 @@ export async function renderTeamsImage(){
     g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(x+colW/2-bw*.21, py+pitchH-bh*.42, bw*.42, bh*.42);
     g.restore(); g.restore();
     g.lineWidth = 3; g.strokeStyle = '#05101f'; g.strokeRect(x,py,colW,pitchH);
+    if(side !== 'num'){                                       // remera del equipo en la esquina
+      const js = 88, jx = x + 28, jy = py + 18;
+      g.save(); g.translate(jx, jy); g.scale(js/24, js/24);
+      g.shadowColor = 'rgba(0,0,0,.45)'; g.shadowBlur = 8; g.shadowOffsetY = 3;
+      const jp = new Path2D(JERSEY_PATH);
+      g.fillStyle = side==='claro' ? '#f4f6f8' : '#10151b'; g.fill(jp);
+      g.shadowColor = 'transparent'; g.lineWidth = 1.1; g.lineJoin = 'round';
+      g.strokeStyle = side==='claro' ? '#05101f' : '#fff'; g.stroke(jp);
+      g.restore();
+    }
 
     // jugadores
     const lines = {POR:[],DEF:[],MED:[],DEL:[]};

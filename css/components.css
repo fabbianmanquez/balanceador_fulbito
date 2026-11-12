@@ -13,7 +13,7 @@
   text-shadow:1px 1px 0 #000;
 }
 .phead.claro{background:linear-gradient(180deg,#fff,#c9d1da);color:#101820;text-shadow:none}
-.phead.oscuro{background:linear-gradient(180deg,#2b3138,#05080c)}
+.phead.oscuro{background:linear-gradient(180deg,#e6ebf1,#b4bec9);color:#101820;text-shadow:none}
 
 /* ---- lista tipo editor PES ---- */
 .list{

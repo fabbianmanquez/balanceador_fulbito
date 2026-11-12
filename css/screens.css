@@ -106,6 +106,7 @@
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
   color:#fff;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase
 }
+.thead.oscuro{background:linear-gradient(180deg,#e6ebf1,#b4bec9);color:#101820;box-shadow:inset 0 0 0 1px rgba(255,255,255,.7)}
 .jersey{position:absolute;top:10px;left:14px;width:58px;height:58px;pointer-events:none;
   stroke-width:1.1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.45))}
 .jersey.claro{fill:#f4f6f8;stroke:#05101f}

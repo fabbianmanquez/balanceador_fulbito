@@ -55,11 +55,12 @@ export async function renderTeamsImage(){
     const side = defs[ti].side;
 
     // barra del equipo
-    g.fillStyle = lin(0,y,0,y+headH,[[0,'#2b3138'],[1,'#0b0f14']]); g.fillRect(x,y,colW,headH);
+    const claroBar = side === 'oscuro';                        // el equipo oscuro lleva la barra clara y letra oscura
+    g.fillStyle = claroBar ? lin(0,y,0,y+headH,[[0,'#e6ebf1'],[1,'#b4bec9']]) : lin(0,y,0,y+headH,[[0,'#2b3138'],[1,'#0b0f14']]); g.fillRect(x,y,colW,headH);
     g.lineWidth = 3; g.strokeStyle = '#05101f'; g.strokeRect(x,y,colW,headH);
-    g.lineWidth = 1.5; g.strokeStyle = 'rgba(255,255,255,.35)'; g.strokeRect(x+3,y+3,colW-6,headH-6);
+    g.lineWidth = 1.5; g.strokeStyle = claroBar ? 'rgba(255,255,255,.7)' : 'rgba(255,255,255,.35)'; g.strokeRect(x+3,y+3,colW-6,headH-6);
     const tx = x + 28;
-    g.textAlign = 'left'; g.fillStyle = '#fff'; g.font = '700 32px '+FONT; spaced('',4);
+    g.textAlign = 'left'; g.fillStyle = claroBar ? '#101820' : '#fff'; g.font = '700 32px '+FONT; spaced('',4);
     g.fillText(defs[ti].title, tx, y+headH/2+2);
     spaced('',0);
 

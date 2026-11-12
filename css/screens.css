@@ -68,10 +68,9 @@
 .cmd:disabled{opacity:.32;cursor:not-allowed;box-shadow:none}
 .cmd .k{
   width:22px;height:22px;border-radius:3px;display:grid;place-items:center;font-size:13px;
-  font-style:normal;font-weight:900;line-height:1;color:#0a1017;
-  background:linear-gradient(180deg,var(--acc),var(--acc2));
-  border:1px solid rgba(0,0,0,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
-.cmd:hover:not(:disabled) .k{background:linear-gradient(180deg,#fff,#dfe6ee)}
+  font-style:normal;font-weight:900;line-height:1;color:var(--acc);
+  background:linear-gradient(180deg,#232d3a,#0a0f16);
+  border:1px solid var(--bd);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
 
 .t-back {--acc:#f07a70; --acc2:#8f2b24; --g1:#ee6a5f; --g2:#b0362d; --g3:#7a1d17; --bd:#3d0a07}
 .t-home {--acc:#b79bf0; --acc2:#4e2f9c; --g1:#a58cf0; --g2:#6a4cc4; --g3:#43298f; --bd:#1f0f55}
